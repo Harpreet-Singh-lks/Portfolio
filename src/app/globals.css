@@ -36,3 +36,21 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes rotateWord1 {
+  0%, 40% { opacity: 1; transform: translateY(0) scale(1); }
+  45%, 100% { opacity: 0; transform: translateY(-15px) scale(0.98); }
+}
+
+@keyframes rotateWord2 {
+  0%, 40% { opacity: 0; transform: translateY(15px) scale(0.98); }
+  45%, 85% { opacity: 1; transform: translateY(0) scale(1); }
+  90%, 100% { opacity: 0; transform: translateY(-15px) scale(0.98); }
+}
+
+.animate-rotateWord1 {
+  animation: rotateWord1 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-rotateWord2 {
+  animation: rotateWord2 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

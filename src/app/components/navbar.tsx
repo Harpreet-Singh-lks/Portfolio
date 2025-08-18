@@ -48,12 +48,12 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
     <nav
       role="navigation"
       aria-label="Main"
-      className="fixed flex items-center top-4 left-1/2 -translate-x-1/2 h-9 gap-4 bg-background/60 dark:bg-card/60 backdrop-blur-md border shadow-sm rounded-xl z-50 px-0"
+      className="fixed flex items-center top-4 left-1/2 -translate-x-1/2 h-16 gap-4 bg-background/60 dark:bg-card/60 backdrop-blur-md border shadow-sm rounded-xl z-50 px-0"
     >
       {/* Logo / Initial */}
-      <div className="h-9 w-9 bg-secondary/20 dark:bg-secondary/60 text-primary rounded-l-xl grid place-items-center font-bold select-none">
-        H
-      </div>
+    <div className="h-16 w-16 bg-secondary/20 dark:bg-secondary/60 text-primary rounded-l-xl grid place-items-center font-bold select-none text-xl">
+      H
+    </div>
 
       {/* Links */}
       <div className="flex flex-row items-baseline gap-8 px-1">
@@ -65,7 +65,7 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
                 href={tab.href}
                 onClick={() => setActiveTab(tab.id)}
                 aria-current={active ? 'page' : undefined}
-                className={`font-mono tracking-tight text-sm transition-colors duration-300 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded ${
+                className={`font-mono tracking-tight text-base transition-colors duration-300 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded ${
                   active
                     ? 'text-primary underline underline-offset-4 font-medium decoration-secondary/70 dark:decoration-secondary-foreground/50 decoration-wavy'
                     : 'text-muted-foreground hover:text-primary'
@@ -84,12 +84,12 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
       </div>
 
       {/* Theme Toggle */}
-      <button
-        type="button"
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-        className="bg-secondary/20 dark:bg-secondary/60 text-primary rounded-r-xl p-2 h-9 w-9 grid place-items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-      >
+    <button
+      type="button"
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+      className="bg-secondary/20 dark:bg-secondary/60 text-primary rounded-r-xl p-2 h-16 w-16 grid place-items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 "
+    >
         {/* Sun (light mode icon shows when dark is off) */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
