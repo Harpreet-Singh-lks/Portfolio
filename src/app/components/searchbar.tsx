@@ -1,7 +1,15 @@
 import React from "react";
 import { useTheme } from "next-themes";
 
-const Searchbar = () => {
+
+interface Props {
+    value: string;
+    setValue: (v: string) => void;
+    onSubmit: (q: string) => void;
+    openSuggestions: () => void;
+    closeSuggestions: () => void;
+  }
+const Searchbar: React.FC<Props> = ({ value, setValue, onSubmit, openSuggestions, closeSuggestions }) => {
     const { theme } = useTheme();
     const dark = theme === "dark";
 
@@ -13,19 +21,34 @@ const Searchbar = () => {
             const q = (formData.get("q") as string || "").trim();
             if (!q) return;
             console.log("Search:", q);
+            onSubmit(q);
             }}
             role="search"
             aria-label="Site search"
             className="w-full max-w-xl"
         >
-            <label htmlFor="search-input" className="sr-only">
-            Search
-            </label>
+            <label htmlFor="search-input" className="sr-only">Search</label>
             <input
             id="search-input"
+            aria-label="Search"
             name="q"
             type="search"
+            value={value}
+            onChange={(e)=> setValue(e.target.value)}
+            onKeyDown={(e)=>{
+                if(e.key == "/" && value === ""){
+                    e.preventDefault();
+                    setValue("/");
+                    openSuggestions();
+                    return;
+                }
+                if(e.key=="Escape"){
+                    closeSuggestions();
+                    return ;
+                }
+            }}
             placeholder="Ask me anything :) | Type '/' for commands"
+            
             autoComplete="off"
             size={42}
             style={{ width: "42ch" }}

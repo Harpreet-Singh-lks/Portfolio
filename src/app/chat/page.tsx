@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
-import SplashCursor from "../components/splashcursor";
 import Suggestion from "../components/suggestion";
 import { createHandleSubmit } from '../lib/chatLogic';
 
-//interface
+// Add the same interfaces from Dashboard
 interface Message {
   id: string;
   type: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  card?: ProjectCard[];
+  cards?: ProjectCard[];
 }
 
 interface ProjectCard {
@@ -23,6 +23,7 @@ interface ProjectCard {
   links: { github?: string; demo?: string; };
   image?: string;
 }
+
 const SAMPLE_SUGGESTIONS = [
   { id: 'about', command: '/about', description: 'Learn about my background and story' },
   { id: 'experience', command: '/experience', description: 'View my work experience and career journey' },
@@ -32,8 +33,9 @@ const SAMPLE_SUGGESTIONS = [
   { id: 'resume', command: '/resume', description: 'Download my resume' }
 ];
 
-const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState('home');
+const ChatInterface = () => {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState('chat');
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -43,71 +45,27 @@ const Dashboard = () => {
     () =>
       createHandleSubmit({
         suggestions: SAMPLE_SUGGESTIONS,
-        setActiveTab,
         setMessages,
         setSearchValue,
         setShowSuggestions,
         setIsTyping
       }),
-    [SAMPLE_SUGGESTIONS, setActiveTab, setMessages, setSearchValue, setShowSuggestions]
+    [SAMPLE_SUGGESTIONS]
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="pt-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        
-        {/* Show hero when no messages, chat when there are messages */}
-        {messages.length === 0 ? (
-          // Hero Section (your existing code)
-          <div className="flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh]">
-            <h1 className="font-['Space_Grotesk'] text-center font-bold leading-tight text-4xl sm:text-5xl md:text-6xl xl:text-7xl tracking-tight">
-              Hi, I am <span className="text-blue-500">Harpreet 👋</span>
-            </h1>
-
-            <h2 className="mt-6 sm:mt-8 text-center font-semibold text-muted-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance]">
-              <span className="block text-base sm:text-lg md:text-xl lg:text-3xl xl:text-4xl">
-                & I love building scalable
-              </span>
-              <span className="block">
-                <span className="relative mx-auto flex items-center justify-center h-10 sm:h-12 md:h-14 px-2 sm:px-3 w-fit min-w-[160px] sm:min-w-[200px] transition-[width] duration-300">
-                  <span className="absolute inset-0 flex items-center justify-center animate-rotateWord1 whitespace-nowrap text-indigo-400 text-xl sm:text-2xl md:text-4xl">
-                    backend systems
-                  </span>
-                  <span className="absolute inset-0 flex items-center justify-center animate-rotateWord2 whitespace-nowrap text-emerald-400 text-xl sm:text-2xl md:text-4xl">
-                    web3 products
-                  </span>
-                </span>
-              </span>
-            </h2>
-
-            <div className="mt-10 sm:mt-12">
-              <Searchbar
-                value={searchValue}
-                setValue={setSearchValue}
-                onSubmit={handleSubmit}
-                openSuggestions={() => setShowSuggestions(true)}
-                closeSuggestions={() => setShowSuggestions(false)}
-              />
-              <SplashCursor />
-            </div>
-          </div>
-        ) : (
-          // Chat Section (NEW)
-          <div className="max-w-4xl mx-auto">
-            {/* Chat Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Chat with Harpreet</h2>
-              <button 
-                onClick={() => setMessages([])}
-                className="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                New Chat
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div className="space-y-4 mb-6">
+      
+      {/* Main chat area that takes remaining space */}
+      <main className="flex-1 pt-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col">
+        <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
+          
+          {/* Chat Header */}
+         
+          {/* Messages Container - scrollable area */}
+          <div className="flex-1 overflow-y-auto mb-6">
+            <div className="space-y-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -143,17 +101,21 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Search Bar - Always at bottom in chat mode */}
-            <div className="sticky bottom-4">
-              <Searchbar
-                value={searchValue}
-                setValue={setSearchValue}
-                onSubmit={handleSubmit}
-                openSuggestions={() => setShowSuggestions(true)}
-                closeSuggestions={() => setShowSuggestions(false)}
-              />
-               {showSuggestions && (
+          {/* Search Bar - Always at bottom */}
+          <div className="relative">
+            <Searchbar
+              value={searchValue}
+              setValue={setSearchValue}
+              onSubmit={handleSubmit}
+              openSuggestions={() => setShowSuggestions(true)}
+              closeSuggestions={() => setShowSuggestions(false)}
+            />
+            
+            {/* Suggestions */}
+            {showSuggestions && (
+              <div className="absolute bottom-full left-0 right-0 mb-2">
                 <Suggestion
                   items={SAMPLE_SUGGESTIONS.map(s => ({
                     id: s.id,
@@ -166,13 +128,14 @@ const Dashboard = () => {
                     setShowSuggestions(false);
                   }}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        )}
+          
+        </div>
       </main>
     </div>
   );
-}
-export default Dashboard;
+};
 
+export default ChatInterface;
