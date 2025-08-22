@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
 import SplashCursor from "../components/splashcursor";
 import Suggestion from "../components/suggestion";
+import CommandPalette from '../components/command-palette';
 import { createHandleSubmit } from '../lib/chatLogic';
 
 //interface
@@ -33,27 +35,21 @@ const SAMPLE_SUGGESTIONS = [
 ];
 
 const Dashboard = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('home');
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSubmit = React.useMemo(
-    () =>
-      createHandleSubmit({
-        suggestions: SAMPLE_SUGGESTIONS,
-        setActiveTab,
-        setMessages,
-        setSearchValue,
-        setShowSuggestions,
-        setIsTyping
-      }),
-    [SAMPLE_SUGGESTIONS, setActiveTab, setMessages, setSearchValue, setShowSuggestions]
-  );
+  const handleSubmit = React.useCallback((query: string) => {
+    localStorage.setItem('initialQuery', query);
+    router.push('/chat');
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <SplashCursor/>
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="pt-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         
@@ -65,7 +61,7 @@ const Dashboard = () => {
               Hi, I am <span className="text-blue-500">Harpreet 👋</span>
             </h1>
 
-            <h2 className="mt-6 sm:mt-8 text-center font-semibold text-muted-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance]">
+            <h2 className="mt-6 sm:mt-8 text-center font-semibold text-mute d-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance]">
               <span className="block text-base sm:text-lg md:text-xl lg:text-3xl xl:text-4xl">
                 & I love building scalable
               </span>
@@ -89,8 +85,26 @@ const Dashboard = () => {
                 openSuggestions={() => setShowSuggestions(true)}
                 closeSuggestions={() => setShowSuggestions(false)}
               />
-              <SplashCursor />
             </div>
+
+            {/* Global Command Palette */}
+            <CommandPalette
+              open={showSuggestions}
+              query={searchValue}
+              items={SAMPLE_SUGGESTIONS.map(s => ({
+                id: s.id,
+                title: s.command,
+                description: s.description,
+                intent: s.id
+              }))}
+              onSelect={(item) => {
+                setShowSuggestions(false);
+                setSearchValue(item.title);
+                localStorage.setItem('initialQuery', item.title);
+                router.push('/chat');
+              }}
+              onClose={() => setShowSuggestions(false)}
+            />
           </div>
         ) : (
           // Chat Section (NEW)

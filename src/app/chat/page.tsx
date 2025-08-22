@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
-import Suggestion from "../components/suggestion";
+import CommandPalette from "../components/command-palette";
 import { createHandleSubmit } from '../lib/chatLogic';
+import MessageBubble from '../components/MessageBubble';
+import type { Message } from '../lib/types';
 
 // Add the same interfaces from Dashboard
 interface Message {
@@ -53,6 +55,15 @@ const ChatInterface = () => {
     [SAMPLE_SUGGESTIONS]
   );
 
+  useEffect(() => {
+    const q = localStorage.getItem('initialQuery');
+    if (q) {
+      localStorage.removeItem('initialQuery');
+      setShowSuggestions(false);
+      handleSubmit(q); // triggers user message + assistant response
+    }
+  }, [handleSubmit]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -66,29 +77,7 @@ const ChatInterface = () => {
           {/* Messages Container - scrollable area */}
           <div className="flex-1 overflow-y-auto mb-6">
             <div className="space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-2xl p-4 rounded-lg ${
-                      message.type === 'user'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
-                    }`}
-                  >
-                    <div className="whitespace-pre-line">{message.content}</div>
-                    <div className={`text-xs mt-2 ${
-                      message.type === 'user' ? 'opacity-70' : 'text-gray-500 dark:text-gray-400'
-                    }`}>
-                      {message.timestamp.toLocaleTimeString()}
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              {/* Typing Indicator */}
+              {messages.map(m => <MessageBubble key={m.id} msg={m} />)}
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
@@ -113,23 +102,23 @@ const ChatInterface = () => {
               closeSuggestions={() => setShowSuggestions(false)}
             />
             
-            {/* Suggestions */}
-            {showSuggestions && (
-              <div className="absolute bottom-full left-0 right-0 mb-2">
-                <Suggestion
-                  items={SAMPLE_SUGGESTIONS.map(s => ({
-                    id: s.id,
-                    title: s.command,
-                    description: s.description,
-                    intent: s.id
-                  }))}
-                  onPick={(item) => {
-                    handleSubmit(item.title);
-                    setShowSuggestions(false);
-                  }}
-                />
-              </div>
-            )}
+            {/* Replace card suggestions with Command Palette */}
+            <CommandPalette
+              open={showSuggestions}
+              query={searchValue}
+              items={SAMPLE_SUGGESTIONS.map(s => ({
+                id: s.id,
+                title: s.command,
+                description: s.description,
+                intent: s.id
+              }))}
+              onSelect={(item) => {
+                setShowSuggestions(false);
+                setSearchValue('');
+                handleSubmit(item.title);
+              }}
+              onClose={() => setShowSuggestions(false)}
+            />
           </div>
           
         </div>

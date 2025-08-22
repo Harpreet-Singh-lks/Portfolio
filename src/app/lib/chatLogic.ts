@@ -1,3 +1,14 @@
+import type { AssistantPayload, Message, ProjectCard, ExperienceItem } from './types';
+
+type Suggestion = { id: string; command: string; description?: string };
+type Ctx = {
+  suggestions: Suggestion[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  setSearchValue: (v: string) => void;
+  setShowSuggestions: (b: boolean) => void;
+  setIsTyping: (b: boolean) => void;
+};
+
 // Pure types
 export interface ProjectCard {
   title: string;
@@ -20,136 +31,83 @@ export interface SuggestionItem {
 }
 
 // Intent detection (pure)
-export const detectIntent = (input: string, suggestions: SuggestionItem[]): string => {
-  const lowercaseInput = input.toLowerCase().trim();
-  const suggestion = suggestions.find(
-    s => lowercaseInput === s.command || lowercaseInput.includes(s.command.slice(1))
-  );
-  if (suggestion) return suggestion.id;
-  if (lowercaseInput.includes('project')) return 'projects';
-  if (lowercaseInput.includes('experience') || lowercaseInput.includes('work')) return 'experience';
-  if (lowercaseInput.includes('skill') || lowercaseInput.includes('tech')) return 'skills';
-  if (lowercaseInput.includes('about') || lowercaseInput.includes('background')) return 'about';
-  if (lowercaseInput.includes('contact') || lowercaseInput.includes('email')) return 'contact';
+const detectIntent = (q: string, suggestions: Suggestion[]) => {
+  const s = q.trim().toLowerCase();
+  const hit = suggestions.find(x => s === x.command || s === x.command.slice(1));
+  if (hit) return hit.id;
+  if (s.includes('project')) return 'projects';
+  if (s.includes('experience') || s.includes('work')) return 'experience';
+  if (s.includes('skill') || s.includes('tech')) return 'skills';
+  if (s.includes('about') || s.includes('background')) return 'about';
+  if (s.includes('contact') || s.includes('email')) return 'contact';
   return 'fallback';
 };
 
-// Response generation (pure)
-export const generateResponse = (intent: string): { content: string; cards?: ProjectCard[] } => {
+const generatePayload = async (intent: string, q: string): Promise<AssistantPayload> => {
   switch (intent) {
     case 'about':
-      return {
-        content: `Hi! I'm Harpreet Singh, a passionate software developer with expertise in building scalable backend systems and web3 products.
-
-I love creating efficient, user-focused solutions and have experience with React, Node.js, and blockchain technologies.
-
-When I'm not coding I explore new tech, contribute to OSS, or share knowledge.`
-      };
+      return { kind: 'text', text: "I'm Harpreet… short about summary." };
     case 'projects':
       return {
-        content: 'Here are some featured projects:',
-        cards: [
-          {
-            title: 'E-commerce Platform',
-            description: 'Full‑stack commerce app (React, Node.js, MongoDB, Stripe)',
-            tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-            links: { github: '#', demo: '#' }
-          },
-          {
-            title: 'Task Management App',
-            description: 'Real-time collaboration (Next.js, Socket.io, PostgreSQL, Redis)',
-            tech: ['Next.js', 'Socket.io', 'PostgreSQL', 'Redis'],
-            links: { github: '#', demo: '#' }
-          }
-        ]
-      };
-    case 'skills':
-      return {
-        content: `Skills:
-
-Frontend: React, Next.js, TypeScript, Tailwind  
-Backend: Node.js, Express, Python, Django, GraphQL  
-Infra & DB: PostgreSQL, MongoDB, Redis, Docker, AWS  
-Testing & Tooling: Jest, CI/CD, Performance`
+        kind: 'projects',
+        items: [
+          { title: 'Project A', description: '…', tech: ['Next.js','Node'], links: { github: '#', demo: '#' } },
+          { title: 'Project B', description: '…', tech: ['React','Redis'], links: { github: '#'} },
+        ] as ProjectCard[]
       };
     case 'experience':
       return {
-        content: `Experience:
-
-Senior Software Developer – TechCorp (2022–Now)
-• Microservices for 100k+ users
-• 40% perf improvement
-
-Full Stack Developer – StartupXYZ (2021–2022)
-• React/Node delivery
-• CI/CD time -60%`
+        kind: 'experience',
+        items: [
+          { role: 'Senior Engineer', company: 'Acme', start: '2023-01', end: 'Present', bullets: ['Led X', 'Improved Y'] },
+          { role: 'Full Stack Dev', company: 'Startup', start: '2021-06', end: '2022-12', bullets: ['Built Z'] },
+        ] as ExperienceItem[]
       };
+    case 'skills':
+      return { kind: 'skills', groups: { Frontend: ['React','Next.js','Tailwind'], Backend: ['Node','Postgres','Redis'] } };
     case 'contact':
-      return {
-        content: `Contact:
-
-Email: harpreet@example.com
-LinkedIn: linkedin.com/in/harpreet-singh
-GitHub: github.com/harpreetsingh`
-      };
-    default:
-      return {
-        content: `Try asking:
-
-/about  /projects  /skills  /experience  /contact
-
-Natural questions also work.`
-      };
+      return { kind: 'text', text: 'Email: … | LinkedIn: … | GitHub: …' };
+    case 'fallback':
+    default: {
+      // Fallback: call Grok (server API) with resume context
+      try {
+        const res = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q })
+        });
+        const data = await res.json();
+        return { kind: 'text', text: data.answer || 'Sorry, I could not find that.' };
+      } catch {
+        return { kind: 'text', text: 'Sorry, something went wrong. Try a command like /projects.' };
+      }
+    }
   }
 };
 
-// Factory to build a submit handler using your component state setters
-export const createHandleSubmit = (opts: {
-  suggestions: SuggestionItem[];
-  setActiveTab?: (tab: string) => void;
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  setSearchValue: (v: string) => void;
-  setShowSuggestions: (v: boolean) => void;
-  setIsTyping: (v: boolean) => void;
-  typingDelay?: number;
-}) => {
-  const {
-    suggestions,
-    setActiveTab,
-    setMessages,
-    setSearchValue,
-    setShowSuggestions,
-    setIsTyping,
-    typingDelay = 800
-  } = opts;
+export const createHandleSubmit = (ctx: Ctx) => {
+  return async (query: string) => {
+    const q = query.trim();
+    if (!q) return;
 
-  return (query: string) => {
-    if (!query.trim()) return;
-    setActiveTab && setActiveTab('chat');
+    const userMsg: Message = { id: crypto.randomUUID(), type: 'user', content: q, timestamp: new Date() };
+    ctx.setMessages(prev => [...prev, userMsg]);
+    ctx.setSearchValue('');
+    ctx.setShowSuggestions(false);
+    ctx.setIsTyping(true);
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      type: 'user',
-      content: query,
-      timestamp: new Date()
+    const intent = detectIntent(q, ctx.suggestions);
+    const payload = await generatePayload(intent, q);
+
+    const assistant: Message = {
+      id: crypto.randomUUID(),
+      type: 'assistant',
+      content: payload.kind === 'text' ? payload.text : '', // echo text here
+      payload,
+      timestamp: new Date(),
     };
-    setMessages(prev => [...prev, userMessage]);
-    setSearchValue('');
-    setShowSuggestions(false);
-    setIsTyping(true);
 
-    setTimeout(() => {
-      const intent = detectIntent(query, suggestions);
-      const response = generateResponse(intent);
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'assistant',
-        content: response.content,
-        cards: response.cards,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
-    }, typingDelay);
+    ctx.setMessages(prev => [...prev, assistant]);
+    ctx.setIsTyping(false);
   };
 };
