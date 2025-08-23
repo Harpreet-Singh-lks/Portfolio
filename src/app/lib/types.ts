@@ -16,9 +16,22 @@ export interface ExperienceItem {
 
 export type AssistantPayload =
   | { kind: 'text'; text: string }
+  | { 
+      kind: 'about'; 
+      description: string;
+      highlights?: string[];
+      stats?: { label: string; value: string }[];
+    }
   | { kind: 'projects'; items: ProjectCard[] }
   | { kind: 'experience'; items: ExperienceItem[] }
-  | { kind: 'skills'; groups: Record<string, string[]> };
+  | { kind: 'skills'; groups: Record<string, string[]> }
+  | { 
+      kind: 'contact'; 
+      email: string; 
+      linkedin?: string; 
+      github?: string; 
+    }
+  | { kind: 'resume'; url: string; summary?: string };
 
 export interface Message {
   id: string;

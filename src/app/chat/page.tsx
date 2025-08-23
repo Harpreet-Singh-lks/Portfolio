@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
@@ -37,6 +37,7 @@ const SAMPLE_SUGGESTIONS = [
 
 const ChatInterface = () => {
   const router = useRouter();
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState('chat');
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchValue, setSearchValue] = useState('');
@@ -68,13 +69,10 @@ const ChatInterface = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex flex-col">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
-      {/* Main chat area that takes remaining space */}
       <main className="flex-1 pt-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col">
         <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
           
-          {/* Chat Header */}
-         
-          {/* Messages Container - scrollable area */}
+          {/* Messages Container */}
           <div className="flex-1 overflow-y-auto mb-6">
             <div className="space-y-4">
               {messages.map(m => <MessageBubble key={m.id} msg={m} />)}
@@ -92,9 +90,10 @@ const ChatInterface = () => {
             </div>
           </div>
 
-          {/* Search Bar - Always at bottom */}
-          <div className="relative">
+          {/* Search Bar Container */}
+          <div className="sticky bottom-0 z-20 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t border-border pt-3">
             <Searchbar
+              ref={searchBarRef} // Now properly forwarded
               value={searchValue}
               setValue={setSearchValue}
               onSubmit={handleSubmit}
@@ -102,7 +101,7 @@ const ChatInterface = () => {
               closeSuggestions={() => setShowSuggestions(false)}
             />
             
-            {/* Replace card suggestions with Command Palette */}
+            {/* Command Palette with intelligent positioning */}
             <CommandPalette
               open={showSuggestions}
               query={searchValue}
@@ -118,6 +117,7 @@ const ChatInterface = () => {
                 handleSubmit(item.title);
               }}
               onClose={() => setShowSuggestions(false)}
+              searchBarRef={searchBarRef}
             />
           </div>
           

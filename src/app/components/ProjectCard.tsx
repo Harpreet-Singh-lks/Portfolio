@@ -1,25 +1,101 @@
 import React from 'react';
+import { ExternalLink, Github, Calendar, Award } from 'lucide-react';
 import type { ProjectCard as Project } from '@/app/lib/types';
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
-      <div className="flex items-start gap-3">
-        {/* optional image */}
+    <div className="group relative rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:shadow-xl hover:bg-zinc-900/80">
+      
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h4 className="font-semibold">{project.title}</h4>
-          <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {project.tech.map(t => (
-              <span key={t} className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">{t}</span>
-            ))}
-          </div>
-          <div className="mt-3 flex gap-3 text-sm">
-            {project.links.github && <a className="text-blue-600 hover:underline" href={project.links.github} target="_blank" rel="noreferrer">GitHub</a>}
-            {project.links.demo && <a className="text-blue-600 hover:underline" href={project.links.demo} target="_blank" rel="noreferrer">Demo</a>}
-          </div>
+          <h3 className="text-lg font-serif italic text-amber-400 group-hover:text-amber-300 transition-colors">
+            {project.title}
+          </h3>
+          {project.timeline && (
+            <div className="flex items-center gap-1.5 mt-1 text-xs text-zinc-400">
+              <Calendar className="w-3 h-3" />
+              {project.timeline}
+            </div>
+          )}
+        </div>
+        
+        {/* Action buttons */}
+        <div className="flex gap-2 ml-4 opacity-70 group-hover:opacity-100 transition-opacity">
+          {project.links.github && (
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-400 hover:text-amber-400 hover:bg-zinc-800/50 transition-all"
+              title="View Source"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+          )}
+          {project.links.demo && (
+            <a
+              href={project.links.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-400 hover:text-amber-400 hover:bg-zinc-800/50 transition-all"
+              title="Live Demo"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          )}
         </div>
       </div>
+
+      {/* Description */}
+      <p className="text-sm text-gray-300 leading-relaxed mb-4 line-clamp-3">
+        {project.description}
+      </p>
+
+      {/* Highlight/Award */}
+      {project.highlight && (
+        <div className="flex items-center gap-2 mb-4 text-sm">
+          <Award className="w-4 h-4 text-amber-400" />
+          <span className="italic font-semibold text-amber-400">
+            {project.highlight}
+          </span>
+        </div>
+      )}
+
+      {/* Tech Stack */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {project.tech.map((tech, index) => (
+          <span
+            key={tech}
+            className={`
+              inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+              border transition-all duration-200
+              ${
+                index === 0
+                  ? 'border-amber-400/30 bg-amber-400/10 text-amber-300'
+                  : 'border-zinc-700 bg-zinc-800 text-gray-300 hover:border-zinc-600'
+              }
+            `}
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      {/* Optional image preview */}
+      {project.image && (
+        <div className="relative h-32 rounded-lg overflow-hidden bg-zinc-800/50 border border-zinc-700">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+            loading="lazy"
+          />
+        </div>
+      )}
+
+      {/* Subtle glow effect on hover */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/0 via-amber-400/0 to-amber-400/0 group-hover:from-amber-400/5 group-hover:via-amber-400/10 group-hover:to-amber-400/5 transition-all duration-500 pointer-events-none" />
     </div>
   );
 }

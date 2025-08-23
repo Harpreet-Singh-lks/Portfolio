@@ -4,21 +4,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import type { ExperienceItem } from '@/app/lib/types';
 
-function formatDateRange(start: string, end: string) {
-    const formatDate = (date: string) => {
-        if (date.toLowerCase() === 'present') return 'Present';
-        try {
-            const [year, month] = date.split('-');
-            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return `${monthNames[parseInt(month) - 1]} ${year}`;
-        } catch {
-            return date;
-        }
-    };
-    return `${formatDate(start)} – ${formatDate(end)}`;
-}
-
 const listVariants = {
     hidden: {},
     show: {
@@ -74,20 +59,10 @@ export default function ExperienceTimeline({ items }: { items: ExperienceItem[] 
                 {items.map((it, i) => (
                     <motion.div
                         key={`${it.company}-${it.role}-${i}`}
-                        className="group relative grid grid-cols-[140px_40px_1fr] sm:grid-cols-[160px_48px_1fr] gap-4 sm:gap-6 items-start"
+                        className="group relative grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] gap-4 sm:gap-6 items-start"
                         variants={itemVariants}
                     >
-                        {/* Left Date Pill */}
-                        <div className="flex justify-end">
-                            <div className="relative">
-                                <span className="inline-flex items-center px-3 py-2 rounded-xl text-xs sm:text-sm font-medium bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border border-blue-200/50 dark:border-blue-700/50 text-blue-700 dark:text-blue-300 shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:scale-105">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-800/20 dark:to-indigo-800/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    <span className="relative z-10">{formatDateRange(it.start, it.end)}</span>
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Middle Timeline */}
+                        {/* Timeline */}
                         <div className="relative flex justify-center">
                             {/* Animated vertical line */}
                             <motion.div
@@ -104,7 +79,7 @@ export default function ExperienceTimeline({ items }: { items: ExperienceItem[] 
                             </motion.div>
                         </div>
 
-                        {/* Right Content */}
+                        {/* Content */}
                         <div className="space-y-3 group-hover:translate-x-1 transition-transform duration-300">
                             <div className="space-y-1">
                                 <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-indigo-600 dark:group-hover:from-blue-400 dark:group-hover:to-indigo-400 transition-all duration-300">
@@ -148,10 +123,9 @@ export default function ExperienceTimeline({ items }: { items: ExperienceItem[] 
 
                 {/* End of timeline indicator */}
                 <motion.div
-                    className="grid grid-cols-[140px_40px_1fr] sm:grid-cols-[160px_48px_1fr] gap-4 sm:gap-6"
+                    className="grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] gap-4 sm:gap-6"
                     variants={itemVariants}
                 >
-                    <div />
                     <motion.div className="flex justify-center" variants={dotVariants}>
                         <div className="w-2 h-2 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700" />
                     </motion.div>

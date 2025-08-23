@@ -46,7 +46,13 @@ const detectIntent = (q: string, suggestions: Suggestion[]) => {
 const generatePayload = async (intent: string, q: string): Promise<AssistantPayload> => {
   switch (intent) {
     case 'about':
-      return { kind: 'text', text: "I'm Harpreet… short about summary." };
+      return {
+        kind: 'about',
+        description: `Hi! I'm Harpreet Singh, a passionate full-stack developer with expertise in building scalable backend systems and innovative web3 products. 
+
+        I love creating efficient, user-focused solutions using modern technologies like React, Node.js, and TypeScript. My journey focuses on solving complex problems and creating meaningful digital experiences.`,
+        
+      };
     case 'projects':
       return {
         kind: 'projects',
