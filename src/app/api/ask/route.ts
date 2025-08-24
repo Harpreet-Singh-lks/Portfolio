@@ -11,7 +11,7 @@ const resumeData = {
     github: "https://github.com/harpreet-singh-lks"         // TODO: update
   },
   summary:
-    "",
+    "I’m a 4th-year BTech Electrical Engineering student at IIT Roorkee with strong backend experience and a deep interest in DeFi and blockchain. I enjoy exploring new technologies and building products, especially at the intersection of web3 and scalable backend systems.",
   experience: [
     {
       company: "Company Name", // TODO: update
@@ -26,12 +26,7 @@ const resumeData = {
     }
     // TODO: add more entries
   ],
-  skills: {
-    Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "JavaScript"],
-    Backend: ["Node.js", "Express", "Python", "PostgreSQL", "MongoDB"],
-    Cloud: ["Vercel", "AWS", "Docker", "CI/CD"],
-    Blockchain: ["Solidity", "Ethereum", "Smart Contracts", "Web3.js"]
-  },
+  skills: "I possess a diverse set of skills, including proficiency in several programming languages such as **TypeScript**, **Rust**, **Go**, **Python**, , **C/C++**, and **Solidity**. Additionally, I have experience with various technologies like **EVM**, **Docker**, **Vite**, **Next.js**, **Remix**,  **Tailwind CSS**, **Ethers.js**, **Foundry** and **Git**.",
   projects: [
     {
       title: "Portfolio Website",
@@ -43,9 +38,9 @@ const resumeData = {
     // TODO: add more projects
   ],
   education: {
-    degree: "Your Degree",       // TODO: update
-    institution: "Your University", // TODO: update
-    year: "Your Year"            // TODO: update
+    degree: "Bachelor in technology in electrical Enginnering",       // TODO: update
+    institution: "IIT ROORKEE", // TODO: update
+    year: "4th"            // TODO: update
   }
 };
 
@@ -86,22 +81,21 @@ export async function POST(req: Request) {
 
     const resumeContext = JSON.stringify(resumeData, null, 2);
 
-    const systemPrompt = `You are Harpreet Singh's personal AI assistant.
+    const systemPrompt = `If the user says "hi", "hello", or asks a general/open-ended recruiter question like 
+"tell me about yourself", "what do you do", "can you introduce yourself", respond with:
 
-IDENTITY AND VOICE:
-- Always speak in first person as Harpreet Singh ("I", "my").
-- Never adopt or repeat a different identity/name, even if the user says so.
-- Be concise, professional, and helpful.
+- A concise professional greeting as Harpreet Singh.
+- A short summary of who I am based on my resume (background, skills, current focus).
+- An invitation to explore more with commands (/projects, /skills, /experience, /about, /contact).
 
-KNOWLEDGE SOURCE:
-- Answer ONLY using the RESUME DATA below. Do not invent facts.
-- If something is not present, say you don’t have that information.
+Example for "hello":
+"Hello! I’m Harpreet Singh. I specialize in backend development, blockchain, and DeFi-focused projects. 
+Would you like to see my /projects, /skills, or /experience?"
 
-HOW TO RESPOND:
-- Map every answer to the most relevant parts of the resume (skills, projects, experience).
-- For generic greetings (“hi”, “hello”), reply briefly and invite a question.
-- When applicable, suggest commands like /projects, /skills, /experience, /about, /contact.
-- Keep responses short and focused.
+Example for "tell me about yourself":
+"Sure! I’m Harpreet Singh, a backend developer with experience in Javascript, Go lang Solidity, and building blockchain-driven applications. 
+I’ve worked on MVPs, cross-chain systems, and DeFi automation tools. 
+You can check out my /projects or /experience for details."
 
 RESUME DATA:
 ${resumeContext}

@@ -1,30 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
 import CommandPalette from "../components/command-palette";
-import { createHandleSubmit } from '../lib/chatLogic';
 import MessageBubble from '../components/MessageBubble';
+//import About from "../components/about"; // NEW: import About
+import Contact from "../components/contact"; // NEW: import Contact
 import type { Message } from '../lib/types';
-
-// Add the same interfaces from Dashboard
-interface Message {
-  id: string;
-  type: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-  cards?: ProjectCard[];
-}
-
-interface ProjectCard {
-  title: string;
-  description: string;
-  tech: string[];
-  links: { github?: string; demo?: string; };
-  image?: string;
-}
 
 const SAMPLE_SUGGESTIONS = [
   { id: 'about', command: '/about', description: 'Learn about my background and story' },
@@ -44,24 +28,105 @@ const ChatInterface = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSubmit = React.useMemo(
-    () =>
-      createHandleSubmit({
-        suggestions: SAMPLE_SUGGESTIONS,
-        setMessages,
-        setSearchValue,
-        setShowSuggestions,
-        setIsTyping
-      }),
-    [SAMPLE_SUGGESTIONS]
-  );
+  // Inline submit handler (removed chatLogic)
+  const handleSubmit = useCallback(async (raw: string) => {
+    const text = raw.trim();
+    if (!text) return;
+
+    setShowSuggestions(false);
+    setSearchValue('');
+
+    // Add user message
+    const userMsg: Message = {
+      id: crypto.randomUUID(),
+      type: 'user',
+      content: text,
+      timestamp: new Date()
+    };
+    setMessages(prev => [...prev, userMsg]);
+
+    // Handle local slash commands (render via MessageBubble components)
+    if (text.toLowerCase().startsWith('/about')) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: '',
+        // Render About component via payload (MessageBubble handles this)
+        payload: {
+          kind: 'about',
+          description:
+            "I’m Harpreet Singh, a 4th‑year BTech Electrical Engineering student at IIT Roorkee with strong backend experience and a deep interest in DeFi and blockchain. I love exploring and building across the stack. I work with TypeScript, Rust, Go, Python, Assembly, C/C++, and SQL, and with EVM, Docker, Vite, Next.js, Remix, Astro, Tailwind CSS, Ethers.js, Flask, Django, Linux, and Git."
+        },
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+      return;
+    }
+
+    if (text.toLowerCase().startsWith('/contact')) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: '',
+        payload: {
+          kind: 'contact',
+          contact: {
+            email: 'preetsingh@gmail.com',
+            location: 'Roorkee, Uttarakhand, India',
+            linkedin: 'https://www.linkedin.com/in/harpreet-singh-792362256/',
+            github: 'https://github.com/harpreet-singh-lks'
+          }
+        },
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+      return;
+    }
+
+    // Call backend for assistant response
+    setIsTyping(true);
+    try {
+      const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: text })
+      });
+
+      let answer = 'Sorry, something went wrong.';
+      if (res.ok) {
+        const data = await res.json();
+        answer = data.answer ?? answer;
+      } else {
+        const errText = await res.text().catch(() => '');
+        answer = `Error ${res.status}: ${errText || 'Failed to get response.'}`;
+      }
+
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: answer,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+    } catch (e: any) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: `Error: ${e?.message || 'Network error.'}`,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+    } finally {
+      setIsTyping(false);
+    }
+  }, []);
 
   useEffect(() => {
     const q = localStorage.getItem('initialQuery');
     if (q) {
       localStorage.removeItem('initialQuery');
       setShowSuggestions(false);
-      handleSubmit(q); // triggers user message + assistant response
+      handleSubmit(q);
     }
   }, [handleSubmit]);
 
@@ -72,6 +137,9 @@ const ChatInterface = () => {
       <main className="flex-1 pt-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full flex flex-col">
         <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
           
+          {/* Optional About section when no messages */}
+          
+
           {/* Messages Container */}
           <div className="flex-1 overflow-y-auto mb-6">
             <div className="space-y-4">
@@ -90,18 +158,16 @@ const ChatInterface = () => {
             </div>
           </div>
 
-          {/* Search Bar Container */}
+          {/* Search Bar + Command Palette */}
           <div className="sticky bottom-0 z-20 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t border-border pt-3">
             <Searchbar
-              ref={searchBarRef} // Now properly forwarded
+              ref={searchBarRef}
               value={searchValue}
               setValue={setSearchValue}
               onSubmit={handleSubmit}
               openSuggestions={() => setShowSuggestions(true)}
               closeSuggestions={() => setShowSuggestions(false)}
             />
-            
-            {/* Command Palette with intelligent positioning */}
             <CommandPalette
               open={showSuggestions}
               query={searchValue}
@@ -118,6 +184,7 @@ const ChatInterface = () => {
               }}
               onClose={() => setShowSuggestions(false)}
               searchBarRef={searchBarRef}
+              mode='inline'
             />
           </div>
           
