@@ -42,7 +42,7 @@ export default function Contact({ contact }: ContactProps) {
     <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur-sm">
       <div className="mb-6">
         <h3 className="text-xl font-serif italic text-amber-400 mb-2">Get In Touch</h3>
-        <p className="text-sm text-gray-300">
+        <p className="text-sl text-gray-300">
           Let's connect and discuss opportunities, collaborations, or just have a chat!
         </p>
       </div>
@@ -55,8 +55,8 @@ export default function Contact({ contact }: ContactProps) {
               <Mail className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-medium text-gray-200">Email</div>
-              <div className="text-xs text-gray-400">{contact.email}</div>
+              <div className="text-sl font-medium text-gray-200">Email</div>
+              <div className="text-xl text-gray-400">{contact.email}</div>
             </div>
           </div>
           <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -115,8 +115,8 @@ export default function Contact({ contact }: ContactProps) {
               <MapPin className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-medium text-gray-200">Location</div>
-              <div className="text-xs text-gray-400">{contact.location}</div>
+              <div className="text-sl font-medium text-gray-200">Location</div>
+              <div className="text-xl text-gray-400">{contact.location}</div>
             </div>
           </div>
         )}
@@ -124,7 +124,7 @@ export default function Contact({ contact }: ContactProps) {
 
       {/* Social Links */}
       <div className="mt-6 pt-6 border-t border-zinc-800">
-        <div className="text-sm font-medium text-gray-200 mb-3">Connect on social</div>
+        <div className="text-sl font-medium text-gray-200 mb-3">Connect on social</div>
         <div className="flex flex-wrap gap-3">
           {contact.linkedin && (
             <a
@@ -134,7 +134,7 @@ export default function Contact({ contact }: ContactProps) {
               className="group flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-800/50 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all"
             >
               <Linkedin className="w-4 h-4 text-blue-400" />
-              <span className="text-xs text-gray-300 group-hover:text-blue-300">LinkedIn</span>
+              <span className="text-xl text-gray-300 group-hover:text-blue-300">LinkedIn</span>
               <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-blue-400" />
             </a>
           )}
@@ -147,7 +147,7 @@ export default function Contact({ contact }: ContactProps) {
               className="group flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-800/50 hover:border-gray-500/50 hover:bg-gray-500/10 transition-all"
             >
               <Github className="w-4 h-4 text-gray-400" />
-              <span className="text-xs text-gray-300 group-hover:text-gray-200">GitHub</span>
+              <span className="text-xl text-gray-300 group-hover:text-gray-200">GitHub</span>
               <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-gray-400" />
             </a>
           )}

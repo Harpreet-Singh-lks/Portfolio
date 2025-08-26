@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <SplashCursor/>
+      
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         

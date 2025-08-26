@@ -50,7 +50,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
       ) : (
         <div className="max-w-5xl p-6 rounded-lg font-['JetBrains_Mono'] bg-transparent text-gray-900 dark:text-white">
           {/* Assistant header */}
-          {!isTextResponse && msg.payload?.kind !== 'about' && (
+          {!isTextResponse && (
             <div className="flex items-center gap-3 mb-4 text-orange-400">
               {getResponseIcon()}
               <span className="text-[24px] font-semibold">
@@ -58,6 +58,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
                 {msg.payload?.kind === 'experience' && 'Experience'}
                 {msg.payload?.kind === 'skills' && 'Skills'}
                 {msg.payload?.kind === 'contact' && 'Contact'}
+                {msg.payload?.kind === 'about' && 'About'}
                 {(!msg.payload || msg.payload.kind === 'text') && 'Response'}
               </span>
             </div>
@@ -81,35 +82,13 @@ export default function MessageBubble({ msg }: { msg: Message }) {
             </div>
           )}
 
-{msg.payload?.kind === 'project' && (
-  <div className="mt-3 space-y-4">
-    {(msg.payload.items as { title: string; description: string; tech: string[] }[]).map(
-      (project, i) => (
-        <div
-          key={i}
-          className="p-4 rounded-2xl shadow bg-gray-50 dark:bg-gray-800"
-        >
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            {project.title}
-          </h3>
-          <p className="mt-1 text-gray-700 dark:text-gray-300">
-            {project.description}
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {project.tech.map((t, j) => (
-              <span
-                key={j}
-                className="px-2 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      )
-    )}
-  </div>
-)}
+            {msg.payload?.kind === 'project' && (
+              <div className="mt-3 grid gap-4">
+                {(msg.payload.items as Project[]).map((project, i) => (
+                  <ProjectCard key={i} project={project} />
+                ))}
+              </div>
+            )}
 
           {msg.payload?.kind === 'link' && (
   <div className="mt-3">

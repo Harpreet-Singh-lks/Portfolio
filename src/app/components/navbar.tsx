@@ -48,7 +48,7 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
     <nav
       role="navigation"
       aria-label="Main"
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between w-[95%] max-w-3xl bg-background/60 dark:bg-card/60 backdrop-blur-md border shadow-sm rounded-2xl px-4"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between w-[60%] max-w-xl bg-background/60 dark:bg-card/60 backdrop-blur-md border shadow-sm rounded-2xl px-4"
     >
       {/* Brand */}
       <div className="h-12 w-12 bg-secondary/20 dark:bg-secondary/60 text-primary rounded-lg grid place-items-center font-bold select-none text-lg">

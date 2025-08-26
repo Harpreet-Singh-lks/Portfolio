@@ -4,24 +4,24 @@ import type { ProjectCard as Project } from '@/app/lib/types';
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="group relative rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:shadow-md hover:bg-zinc-900/80">
+    <div className="group relative w-full rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:shadow-md hover:bg-zinc-900/80">
       
       {/* Header */}
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2">
         <div className="flex-1">
-          <h3 className="text-lg font-serif italic text-amber-400 group-hover:text-amber-300 transition-colors">
+          <h3 className="text-xl font-serif italic text-amber-400 group-hover:text-amber-300 transition-colors break-words">
             {project.title}
           </h3>
           {project.timeline && (
             <div className="flex items-center gap-1 mt-1 text-xs text-zinc-500">
-              <Calendar className="w-3 h-3" />
-              {project.timeline}
+              <Calendar className="w-3 h-3 shrink-0" />
+              <span className="truncate">{project.timeline}</span>
             </div>
           )}
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-2 ml-3 opacity-60 group-hover:opacity-100 transition-opacity">
+        <div className="flex gap-2 opacity-70 group-hover:opacity-100 transition-opacity shrink-0">
           {project.links.github && (
             <a
               href={project.links.github}
@@ -48,27 +48,27 @@ export default function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-gray-300 leading-relaxed mb-3">
+      <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-3">
         {project.description}
       </p>
 
       {/* Highlight */}
       {project.highlight && (
-        <div className="flex items-center gap-2 mb-3 text-sm">
-          <Award className="w-4 h-4 text-amber-400" />
-          <span className="italic font-semibold text-amber-400">
+        <div className="flex items-center gap-2 mb-3 text-sm sm:text-base">
+          <Award className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="italic font-semibold text-amber-400 break-words">
             {project.highlight}
           </span>
         </div>
       )}
 
       {/* Tech Stack */}
-      <div className="flex flex-wrap gap-1.5 mb-3">
+      <div className="flex flex-wrap gap-2 mb-3">
         {project.tech.map((tech, index) => (
           <span
             key={tech}
             className={`
-              inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+              inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm font-medium
               border transition-colors
               ${
                 index === 0
@@ -84,7 +84,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 
       {/* Optional image */}
       {project.image && (
-        <div className="relative h-28 rounded-lg overflow-hidden bg-zinc-800/50 border border-zinc-700">
+        <div className="relative w-full h-40 sm:h-52 rounded-lg overflow-hidden bg-zinc-800/50 border border-zinc-700">
           <img
             src={project.image}
             alt={project.title}
@@ -94,7 +94,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         </div>
       )}
 
-      {/* Subtle hover accent */}
+      {/* Hover accent border */}
       <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-amber-400/10 transition-colors pointer-events-none" />
     </div>
   );

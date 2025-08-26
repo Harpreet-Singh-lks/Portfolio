@@ -22,13 +22,19 @@ const SAMPLE_SUGGESTIONS = [
 const ChatInterface = () => {
   const router = useRouter();
   const searchBarRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState('chat');
   const [messages, setMessages] = useState<Message[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
   // Inline submit handler (removed chatLogic)
+
   const handleSubmit = useCallback(async (raw: string) => {
     const text = raw.trim();
     if (!text) return;
@@ -71,7 +77,7 @@ const ChatInterface = () => {
         payload: {
           kind: 'contact',
           contact: {
-            email: 'preetsingh@gmail.com',
+            email: 'preetsinghlks@gmail.com',
             location: 'Roorkee, Uttarakhand, India',
             linkedin: 'https://www.linkedin.com/in/harpreet-singh-792362256/',
             github: 'https://github.com/harpreet-singh-lks',
@@ -132,21 +138,21 @@ const ChatInterface = () => {
           items: [
             {
               title: "Decentralized Reputation-Based Mortgage System",
-              description:
-                "Built for Graphite Network Reputation Hackathon, this project enables decentralized compliance and modular identity infrastructure to issue mortgages based on on-chain trust scores.",
-              tech: ["Solidity", "Foundry", "The Graph", "IPFS"]
+              description: "...",
+              tech: ["Solidity", "Foundry", "The Graph", "IPFS"],
+              links: {} // 👈 required to satisfy ProjectCard
             },
             {
               title: "Cross-Chain HTLC Atomic Swap",
-              description:
-                "Implemented a system for bidirectional swaps between Ethereum and Cardano using 1inch Fusion+ intent-based model with Solidity and Plutus smart contracts.",
-              tech: ["Solidity", "Plutus", "Foundry", "Haskell"]
+              description: "...",
+              tech: ["Solidity", "Plutus", "Foundry", "Haskell"],
+              links: {}
             },
             {
               title: "AI-Driven Healthcare Business Automation",
-              description:
-                "MVP platform automating 10+ healthcare modules including EMR, billing, staffing, and marketing, with Zapier and AI integrations.",
-              tech: ["Next.js", "Node.js", "Stripe", "Zapier", "OpenAI"]
+              description: "...",
+              tech: ["Next.js", "Node.js", "Stripe", "Zapier", "OpenAI"],
+              links: {}
             }
           ]
         },
@@ -246,6 +252,7 @@ const ChatInterface = () => {
                   </div>
                 </div>
               )}
+              <div ref={messagesEndRef} />
             </div>
           </div>
 
