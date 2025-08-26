@@ -13,7 +13,7 @@ interface Props {
   items: CommandItem[];
   onSelect: (item: CommandItem) => void;
   onClose: () => void;
-  searchBarRef?: React.RefObject<HTMLElement>;
+  searchBarRef?: React.RefObject<HTMLElement | null>;
   mode?: "overlay" | "inline" | "below";
 }
 
