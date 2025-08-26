@@ -42,6 +42,22 @@ export default function MessageBubble({ msg }: { msg: Message }) {
     return <Terminal className="w-7 h-7" />;
   };
 
+  const HighLightedText=(text: string)=>{
+    const highlightWords= [
+      'skills',
+      'experience',
+    ]
+    let highlighted = text;
+    highlightWords.forEach((word) => {
+      const regex = new RegExp(`\\b(${word})\\b`, "gi");
+      highlighted = highlighted.replace(
+        regex,
+        `<mark class="highlight-word">$1</mark>`
+      );
+    });
+
+    return { __html: highlighted };
+  }
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       {isUser ? (
@@ -68,57 +84,11 @@ export default function MessageBubble({ msg }: { msg: Message }) {
           {isTextResponse && (
             <div className="flex items-start gap-3">
               <Terminal className="w-6 h-6 mt-1 text-orange-400 flex-shrink-0" />
-              <div className="whitespace-pre-line text-[24px] leading-relaxed">{textContent}</div>
+              <div className="whitespace-pre-line text-[24px] leading-relaxed">{textContent}</div>  {/*assistant text replies */}
             </div>
           )}
-
-            {msg.payload?.kind === 'projects' && (
-            <div className="grid gap-6 mt-3 sm:grid-cols-2">
-                {msg.payload.items.map((p, i) => {
-                console.log("Project item:", p); // 🔍 check shape
-                return <ProjectCard key={i} project={p} />;
-                })}
-            </div>
-            )}
-
-          {msg.payload?.kind === 'experience' && (
-            <div className="mt-3">
-              <ExperienceTimeline items={msg.payload.items} />
-            </div>
-          )}
-
-          {msg.payload?.kind === 'skills' && (
-            <div className="mt-3 grid gap-4 sm:grid-cols-2">
-              {Object.entries(msg.payload.groups).map(([group, skills]) => (
-                <div
-                  key={group}
-                  className="p-4 rounded-lg bg-zinc-800/30 border border-zinc-800/50"
-                >
-                  <div className="font-semibold text-amber-400 mb-3 text-[24px]">
-                    {group}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((s) => (
-                      <span
-                        key={s}
-                        className="text-lg px-3 py-1.5 rounded-full bg-zinc-700 text-gray-300 border border-zinc-600 font-medium"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {msg.payload?.kind === 'contact' && (
-            <div className="mt-3">
-              <Contact contact={msg.payload.contact} />
-            </div>
-          )}
-
-          {msg.payload?.kind === 'about' && (
+              {/* About Section  */}
+              {msg.payload?.kind === 'about' && (
             <div className="mt-3">
               <About
                 description={msg.payload.description}
@@ -127,6 +97,61 @@ export default function MessageBubble({ msg }: { msg: Message }) {
               />
             </div>
           )}
+
+            {msg.payload?.kind === 'project' && (
+              <div className="mt-3 space-y-4">
+                {msg.payload.items.map((project, i) => (
+              <div key={i} className="p-4 rounded-2xl shadow bg-gray-50 dark:bg-gray-800">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{project.title}</h3>
+        <p className="mt-1 text-gray-700 dark:text-gray-300">{project.description}</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {project.tech.map((t: string, j: number) => (
+            <span
+              key={j}
+              className="px-2 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+          {msg.payload?.kind === 'link' && (
+  <div className="mt-3">
+    <a
+      href={msg.payload.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-500 underline text-[20px]"
+    >
+      {msg.content || "Click here to view my resume"}
+    </a>
+  </div>
+)}
+
+          {msg.payload?.kind === 'experience' && (
+            <div className="mt-3">
+              <ExperienceTimeline items={msg.payload.items} />
+            </div>
+          )}
+
+{msg.payload?.kind === 'skills' && (
+  <div className="mt-3">
+    <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+      {msg.payload.description}
+    </p>
+  </div>
+)}
+
+          {msg.payload?.kind === 'contact' && (
+            <div className="mt-3">
+              <Contact contact={msg.payload.contact} />
+            </div>
+          )}
+
+          
         </div>
       )}
     </div>

@@ -6,9 +6,9 @@ import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
 import CommandPalette from "../components/command-palette";
 import MessageBubble from '../components/MessageBubble';
-//import About from "../components/about"; // NEW: import About
-import Contact from "../components/contact"; // NEW: import Contact
+
 import type { Message } from '../lib/types';
+import { Twitter } from "lucide-react";
 
 const SAMPLE_SUGGESTIONS = [
   { id: 'about', command: '/about', description: 'Learn about my background and story' },
@@ -74,7 +74,8 @@ const ChatInterface = () => {
             email: 'preetsingh@gmail.com',
             location: 'Roorkee, Uttarakhand, India',
             linkedin: 'https://www.linkedin.com/in/harpreet-singh-792362256/',
-            github: 'https://github.com/harpreet-singh-lks'
+            github: 'https://github.com/harpreet-singh-lks',
+            Twitter: 'https://x.com/J_oKer_57'
           }
         },
         timestamp: new Date()
@@ -82,6 +83,96 @@ const ChatInterface = () => {
       setMessages(prev => [...prev, assistantMsg]);
       return;
     }
+    if (text.toLowerCase().startsWith('/experience')) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: 'Here\'s my experience timeline:',
+        payload: {
+          kind: 'experience',
+          items: [
+            {
+              company: "Amorcer",
+              role: "Software Engineering Intern",
+              period: "Jan 2025 – Apr 2025",
+              description: [
+                "Worked on backend development in Go",
+                "Implemented REST APIs for microservices architecture", 
+                "Improved database performance by 30% through query optimization",
+                "Collaborated with cross-functional teams using Agile methodology"
+              ]
+            },
+            {
+              company: "Hackathon Project",
+              role: "Blockchain Developer", 
+              period: "2024",
+              description: [
+                "Built cross-chain DeFi protocols using Solidity, Move, and Rust",
+                "Implemented automated market maker (AMM) functionality",
+                "Developed smart contracts for yield farming protocols",
+                "Created frontend interface using React and Web3.js"
+              ]
+            }
+          ]
+        },
+        timestamp: new Date()
+      };
+    
+      setMessages(prev => [...prev, assistantMsg]);
+      return;
+    }
+    if (text.toLowerCase().startsWith('/project')) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: '',
+        // Render Project component via payload (MessageBubble handles this)
+        payload: {
+          kind: 'project',
+          items: [
+            {
+              title: "Decentralized Reputation-Based Mortgage System",
+              description:
+                "Built for Graphite Network Reputation Hackathon, this project enables decentralized compliance and modular identity infrastructure to issue mortgages based on on-chain trust scores.",
+              tech: ["Solidity", "Foundry", "The Graph", "IPFS"]
+            },
+            {
+              title: "Cross-Chain HTLC Atomic Swap",
+              description:
+                "Implemented a system for bidirectional swaps between Ethereum and Cardano using 1inch Fusion+ intent-based model with Solidity and Plutus smart contracts.",
+              tech: ["Solidity", "Plutus", "Foundry", "Haskell"]
+            },
+            {
+              title: "AI-Driven Healthcare Business Automation",
+              description:
+                "MVP platform automating 10+ healthcare modules including EMR, billing, staffing, and marketing, with Zapier and AI integrations.",
+              tech: ["Next.js", "Node.js", "Stripe", "Zapier", "OpenAI"]
+            }
+          ]
+        },
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+      return;
+    }
+    
+    if (text.toLowerCase().startsWith('/resume')) {
+      const assistantMsg: Message = {
+        id: crypto.randomUUID(),
+        type: 'assistant',
+        content: 'Click here to view my resume ',
+        payload: {
+          kind: 'link',
+          url: ' https://drive.google.com/file/d/1ueDR1rZ2hCgi_Ahy6WMe2uGCaWKbBr4Y/view?usp=drivesdk' // Replace with your actual resume link
+        },
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+      return;
+    }
+    
+    
+    
 
     // Call backend for assistant response
     setIsTyping(true);
