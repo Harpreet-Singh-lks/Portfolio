@@ -22,7 +22,8 @@ export default function Contact({ contact }: ContactProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
-  const copyToClipboard = async (text: string, type: 'email' | 'phone') => {
+  const copyToClipboard = async (text: string | undefined, type: 'email' | 'phone') => {
+    if (!text) return;
     try {
       await navigator.clipboard.writeText(text);
       if (type === 'email') {

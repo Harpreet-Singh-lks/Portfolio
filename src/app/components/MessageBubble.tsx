@@ -6,36 +6,19 @@ import ExperienceTimeline from './ExperienceTimeline';
 import About from './about';
 import Contact from './contact';
 
-// ⌨️ Typing animation component
-function TypingText({ text, speed = 30 }: { text: string; speed?: number }) {
-  const [displayed, setDisplayed] = useState('');
-  useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setDisplayed((prev) => prev + text.charAt(i));
-      i++;
-      if (i >= text.length) clearInterval(interval);
-    }, speed);
-    return () => clearInterval(interval);
-  }, [text, speed]);
-  return <span>{displayed}</span>;
-}
+type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+};
 
-// 💬 Typing dots indicator
-function TypingDots() {
-  return (
-    <div className="flex space-x-1 mt-1">
-      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>
-      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:0.15s]"></div>
-      <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:0.3s]"></div>
-    </div>
-  );
-}
 
 export default function MessageBubble({ msg }: { msg: Message }) {
   const isUser = msg.type === 'user';
   const isTextResponse = !msg.payload || msg.payload.kind === 'text';
-  const textContent = msg.content || msg.payload?.text || '';
+  const hasText = (p: unknown): p is { text?: string } =>
+    !!p && typeof p === 'object' && 'text' in p;
+  const textContent = msg.content || (msg.payload && hasText(msg.payload) ? msg.payload.text ?? '' : '');
 
   const getResponseIcon = () => {
     if (isUser) return null;
@@ -88,36 +71,46 @@ export default function MessageBubble({ msg }: { msg: Message }) {
             </div>
           )}
               {/* About Section  */}
-              {msg.payload?.kind === 'about' && (
+          {msg.payload?.kind === 'about' && (
             <div className="mt-3">
               <About
-                description={msg.payload.description}
-                highlights={msg.payload.highlights}
-                stats={msg.payload.stats}
+                description={(msg.payload as any).description}
+                highlights={(msg.payload as any).highlights}
+                stats={(msg.payload as any).stats}
               />
             </div>
           )}
 
-            {msg.payload?.kind === 'project' && (
-              <div className="mt-3 space-y-4">
-                {msg.payload.items.map((project, i) => (
-              <div key={i} className="p-4 rounded-2xl shadow bg-gray-50 dark:bg-gray-800">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{project.title}</h3>
-        <p className="mt-1 text-gray-700 dark:text-gray-300">{project.description}</p>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {project.tech.map((t: string, j: number) => (
-            <span
-              key={j}
-              className="px-2 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-            >
-              {t}
-            </span>
-          ))}
+{msg.payload?.kind === 'project' && (
+  <div className="mt-3 space-y-4">
+    {(msg.payload.items as { title: string; description: string; tech: string[] }[]).map(
+      (project, i) => (
+        <div
+          key={i}
+          className="p-4 rounded-2xl shadow bg-gray-50 dark:bg-gray-800"
+        >
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            {project.title}
+          </h3>
+          <p className="mt-1 text-gray-700 dark:text-gray-300">
+            {project.description}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {project.tech.map((t, j) => (
+              <span
+                key={j}
+                className="px-2 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-    ))}
+      )
+    )}
   </div>
 )}
+
           {msg.payload?.kind === 'link' && (
   <div className="mt-3">
     <a

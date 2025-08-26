@@ -1,10 +1,15 @@
-export interface ProjectCard {
+export type ProjectCard = {
   title: string;
   description: string;
   tech: string[];
-  links: { github?: string; demo?: string };
+  links: {
+    github?: string;
+    demo?: string;
+  };
   image?: string;
-}
+  timeline?: string;   // ✅ add this
+  highlight?: string;  // ✅ add this
+};
 
 export interface ExperienceItem {
   role: string;
@@ -31,7 +36,7 @@ type ContactPayload = {
   };
 };
 
-type ExperienceItem = {
+type ExperiencePayloadItem = {
   company: string;
   role: string;
   period: string;
@@ -40,7 +45,7 @@ type ExperienceItem = {
 
 type ExperiencePayload = {
   kind: 'experience';
-  items: ExperienceItem[];
+  items: ExperiencePayloadItem[];
 };
 
 type ProjectItem = {
