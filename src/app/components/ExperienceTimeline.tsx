@@ -24,6 +24,20 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
+const variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      // Use a string easing name supported by Framer Motion
+      ease: "easeInOut",
+      // Or: ease: "easeInOut"
+    },
+  },
+};
+
 const ExperienceTimeline: React.FC<Props> = ({ items }: Props) => {
   return (
     <motion.div

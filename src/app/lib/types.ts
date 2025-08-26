@@ -14,24 +14,59 @@ export interface ExperienceItem {
   bullets: string[];
 }
 
-export type AssistantPayload =
-  | { kind: 'text'; text: string }
-  | { 
-      kind: 'about'; 
-      description: string;
-      highlights?: string[];
-      stats?: { label: string; value: string }[];
-    }
-  | { kind: 'projects'; items: ProjectCard[] }
-  | { kind: 'experience'; items: ExperienceItem[] }
-  | { kind: 'skills'; groups: Record<string, string[]> }
-  | { 
-      kind: 'contact'; 
-      email: string; 
-      linkedin?: string; 
-      github?: string; 
-    }
-  | { kind: 'resume'; url: string; summary?: string };
+// Rich assistant payload shapes
+type AboutPayload = {
+  kind: 'about';
+  description: string;
+};
+
+type ContactPayload = {
+  kind: 'contact';
+  contact: {
+    email: string;
+    location?: string;
+    linkedin?: string;
+    github?: string;
+    Twitter?: string;
+  };
+};
+
+type ExperienceItem = {
+  company: string;
+  role: string;
+  period: string;
+  description: string[];
+};
+
+type ExperiencePayload = {
+  kind: 'experience';
+  items: ExperienceItem[];
+};
+
+type ProjectItem = {
+  title: string;
+  description: string;
+  tech: string[];
+};
+
+type ProjectPayload = {
+  kind: 'project';
+  items: ProjectItem[];
+};
+
+type LinkPayload = {
+  kind: 'link';
+  url: string;
+};
+
+// Extendable union for assistant payloads
+type AssistantPayload =
+  | AboutPayload
+  | ContactPayload
+  | ExperiencePayload
+  | ProjectPayload
+  | LinkPayload
+  | { kind: string; [key: string]: any }; // fallback for future/unknown payloads
 
 export interface Message {
   id: string;
