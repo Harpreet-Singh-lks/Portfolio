@@ -48,10 +48,15 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
     <nav
       role="navigation"
       aria-label="Main"
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between w-[60%] max-w-xl bg-background/60 dark:bg-card/60 backdrop-blur-md border shadow-sm rounded-2xl px-4"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between 
+                 w-[60%] max-w-xl bg-neutral-900/80 dark:bg-neutral-950/80 
+                 backdrop-blur-md border border-neutral-800 shadow-md 
+                 rounded-2xl px-4"
     >
       {/* Brand */}
-      <div className="h-12 w-12 bg-secondary/20 dark:bg-secondary/60 text-primary rounded-lg grid place-items-center font-bold select-none text-lg">
+      <div className="h-12 w-12 bg-blue-500/20 text-blue-400 
+                      dark:bg-blue-400/20 dark:text-blue-300
+                      rounded-lg grid place-items-center font-bold select-none text-lg">
         H
       </div>
 
@@ -65,19 +70,13 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
               href={tab.href}
               onClick={() => setActiveTab(tab.id)}
               aria-current={active ? 'page' : undefined}
-              className={`font-mono tracking-tight text-base transition-colors duration-300 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded ${
-                active
-                  ? 'text-primary underline underline-offset-4 font-medium decoration-secondary/70 dark:decoration-secondary-foreground/50 decoration-wavy'
-                  : 'text-muted-foreground hover:text-primary'
-              }`}
+              className={`font-Molde tracking-tight text-base transition-colors duration-300 relative 
+                ${active
+                  ? 'text-blue-400 font-semibold underline underline-offset-4 decoration-blue-500/50'
+                  : 'text-gray-400 hover:text-blue-400'
+                }`}
             >
               /{tab.label}
-              {active && (
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-1 left-0 h-[2px] w-full bg-primary/50 rounded"
-                />
-              )}
             </Link>
           );
         })}
@@ -87,9 +86,11 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
       <div className="flex items-center gap-3">
         <button
           type="button"
-          onClick={toggleTheme}
+          
           aria-label="Toggle theme"
-          className="bg-secondary/20 dark:bg-secondary/60 text-primary rounded-lg p-2 h-12 w-12 grid place-items-center"
+          className="bg-neutral-800 hover:bg-neutral-700 dark:bg-neutral-800 
+                     text-gray-300 hover:text-blue-400 rounded-lg p-2 
+                     h-12 w-12 grid place-items-center transition-colors"
         >
           {/* Sun Icon */}
           <svg
@@ -123,7 +124,8 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
         {/* Hamburger Menu (mobile only) */}
         <button
           type="button"
-          className="md:hidden p-2 rounded-lg bg-secondary/20 dark:bg-secondary/60 text-primary"
+          className="md:hidden p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 
+                     text-gray-300 hover:text-blue-400 transition-colors"
           onClick={() => setIsMenuOpen(prev => !prev)}
           aria-label="Toggle navigation menu"
         >
@@ -133,7 +135,9 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-background dark:bg-card border-t shadow-md rounded-b-2xl md:hidden flex flex-col py-3">
+        <div className="absolute top-16 left-0 w-full bg-neutral-900 dark:bg-neutral-950 
+                        border-t border-neutral-800 shadow-md rounded-b-2xl 
+                        md:hidden flex flex-col py-3">
           {tabs.map(tab => {
             const active = activeTab === tab.id;
             return (
@@ -144,11 +148,11 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
                   setActiveTab(tab.id);
                   setIsMenuOpen(false);
                 }}
-                className={`px-4 py-2 font-mono text-base transition-colors ${
-                  active
-                    ? 'text-primary font-semibold bg-secondary/20 dark:bg-secondary/40'
-                    : 'text-muted-foreground hover:text-primary'
-                }`}
+                className={`px-4 py-2 font-mono text-base transition-colors 
+                  ${active
+                    ? 'text-blue-400 font-semibold bg-neutral-800'
+                    : 'text-gray-400 hover:text-blue-400'
+                  }`}
               >
                 /{tab.label}
               </Link>

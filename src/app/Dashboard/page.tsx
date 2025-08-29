@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-br from-black via-neutral-900 to-neutral-800">
       
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -46,7 +46,7 @@ const Dashboard = () => {
         {/* Hero Section with animations */}
         <div className="flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh]">
           {/* Main heading with fade-up animation */}
-          <h1 className={`font-['Space_Grotesk'] text-center font-bold leading-tight text-4xl sm:text-5xl md:text-6xl xl:text-7xl tracking-tight transition-all duration-1000 ease-out ${
+          <h1 className={`font-Molde text-center font-bold leading-tight text-4xl sm:text-5xl md:text-6xl xl:text-7xl tracking-tight transition-all duration-1000 ease-out ${
             isLoaded 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-8'
@@ -55,7 +55,7 @@ const Dashboard = () => {
           </h1>
 
           {/* Subtitle with delayed animation */}
-          <h2 className={`mt-6 sm:mt-8 text-center font-semibold text-muted-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance] transition-all duration-1000 ease-out delay-300 ${
+          <h2 className={`mt-6 sm:mt-8 text-center font-Molde text-muted-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance] transition-all duration-1000 ease-out delay-300 ${
             isLoaded 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-8'
