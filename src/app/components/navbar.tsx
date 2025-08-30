@@ -14,7 +14,7 @@ const tabs = [
   { id: 'home', label: 'home', href: '/' },
   { id: 'chat', label: 'chat', href: '/chat' },
   { id: 'blog', label: 'blog', href: '/blog' },
-  { id: 'resume', label: 'resume', href: '/resume' }
+  
 ];
 
 const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
