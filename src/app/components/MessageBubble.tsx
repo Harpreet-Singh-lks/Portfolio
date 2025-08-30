@@ -12,6 +12,13 @@ type Project = {
   title: string;
   description: string;
   tech: string[];
+  links?: {
+    github?: string;
+    demo?: string;
+  };
+  image?: string;
+  timeline?: string;
+  highlight?: string;
 };
 
 const escapeRegExp = (string: string) => {
@@ -124,8 +131,8 @@ export default function MessageBubble({ msg }: { msg: Message }) {
           {isTextResponse && (
   <div className="flex items-start gap-3">
     <Terminal className="w-6 h-6 mt-1 text-gray-400 flex-shrink-0" />
-    {msg.animate ? (
-  <p className="whitespace-pre-line text-[22px] leading-relaxed text-gray-400">
+    {(msg as any).animate ? (
+  <p className="whitespace-pre-line text-[24px] leading-relaxed text-gray-400">
     {textContent.split(" ").map((word, i) => {
       const highlighted = highlightText(word).__html; // highlight this word
       return (
@@ -154,7 +161,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
   </p>
 ) : (
   <div
-    className="whitespace-pre-line text-[22px] leading-relaxed text-gray-400"
+    className="whitespace-pre-line text-[24px] leading-relaxed text-gray-400"
     dangerouslySetInnerHTML={highlightText(textContent)} // highlight whole text at once
   />
 )}
@@ -165,7 +172,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
 
           {/* About Section */}
           {msg.payload?.kind === 'about' && (
-            <div className="mt-3 text-gray-500 text-[22px] leading-relaxed">
+            <div className="mt-3 text-gray-500 text-[24px] leading-relaxed">
               <About
                 description={(msg.payload as any).description}
               />
@@ -175,7 +182,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
           {msg.payload?.kind === 'project' && (
             <div className="mt-3 grid gap-4">
               {(msg.payload.items as Project[]).map((project, i) => (
-                <ProjectCard key={i} project={project} />
+                <ProjectCard key={i} project={{ ...project, links: project.links ?? {} }} />
               ))}
             </div>
           )}

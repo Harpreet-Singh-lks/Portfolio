@@ -77,6 +77,6 @@ export interface Message {
   id: string;
   type: 'user' | 'assistant';
   timestamp: Date;
-  content: string;            // for user echo and simple text
+  content: string| null;            // for user echo and simple text
   payload?: AssistantPayload; // for rich responses
 }

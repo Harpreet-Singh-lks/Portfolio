@@ -8,7 +8,7 @@ import CommandPalette from "../components/command-palette";
 import MessageBubble from '../components/MessageBubble';
 
 import type { Message } from '../lib/types';
-import { Twitter } from "lucide-react";
+
 
 const SAMPLE_SUGGESTIONS = [
   { id: 'about', command: '/about', description: 'Learn about my background and story' },
@@ -171,7 +171,7 @@ const ChatInterface = () => {
       const assistantMsg: Message = {
         id: crypto.randomUUID(),
         type: 'assistant',
-        content: undefined,
+        content: null,
         payload: resolved,
         timestamp: new Date()
       };
@@ -198,7 +198,6 @@ const ChatInterface = () => {
         id: crypto.randomUUID(),
         type: 'assistant',
         content: answer,
-        animate: true,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, assistantMsg]);

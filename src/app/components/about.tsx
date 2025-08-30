@@ -13,7 +13,7 @@ export default function About({
   description 
 }: AboutProps) {
   return (
-    <div className="about-content text-gray-400 text-lg md:text-xl font-Molde leading-relaxed tracking-wide space-y-4 max-w-3xl mx-auto">
+    <div className="about-content text-gray-400 text-lg md:text-2xl font-Molde leading-relaxed tracking-wide space-y-4 max-w-5xl mx-auto">
       <p className="whitespace-pre-line">
         {description.split(' ').map((word, i) => {
           const cleanWord = word.replace(/[.,]/g, ""); // remove punctuation for matching
