@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 import Navbar from "../components/navbar";
 import Searchbar from '../components/searchbar';
-import SplashCursor from "../components/splashcursor";
+
 import CommandPalette from '../components/command-palette';
 
 const SAMPLE_SUGGESTIONS = [
@@ -111,6 +111,7 @@ const Dashboard = () => {
                       onClose={() => setShowSuggestions(false)}
                       searchBarRef={searchBarRef}
                       mode="below"  // use dropdown mode
+                      className=""
                     />
                   </div>
                 </div>

@@ -15,6 +15,7 @@ interface Props {
   onClose: () => void;
   searchBarRef?: React.RefObject<HTMLElement | null>;
   mode?: "overlay" | "inline" | "below";
+  className: string;
 }
 
 export default function CommandPalette({
@@ -25,6 +26,7 @@ export default function CommandPalette({
   onClose,
   searchBarRef,
   mode = "overlay",
+  className="",
 }: Props) {
   const [active, setActive] = useState(0);
 
@@ -72,11 +74,10 @@ export default function CommandPalette({
   }, [filtered]);
 
   if (!open || filtered.length === 0) return null;
-
   const suggestionList = (
     <div
       role="listbox"
-      className="overflow-auto max-h-72 font-mono text-[15px]"
+      className="overflow-auto max-h-56 sm:max-h-72 font-mono text-sm sm:text-[15px]"
     >
       {filtered.map((item, idx) => (
         <button
@@ -85,7 +86,7 @@ export default function CommandPalette({
           aria-selected={idx === active}
           onMouseEnter={() => setActive(idx)}
           onClick={() => onSelect(item)}
-          className={`w-full flex items-center justify-between px-4 py-2 transition-colors
+          className={`w-full flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 sm:px-4 py-2 transition-colors
             ${
               idx === active
                 ? "bg-zinc-800 text-amber-400"
@@ -101,7 +102,7 @@ export default function CommandPalette({
           </span>
           {item.description && (
             <span
-              className={`ml-4 text-sm ${
+              className={`mt-1 sm:mt-0 sm:ml-4 text-xs sm:text-sm ${
                 idx === active ? "text-zinc-400" : "text-zinc-500"
               }`}
             >
@@ -112,19 +113,18 @@ export default function CommandPalette({
       ))}
     </div>
   );
-
   return (
     <>
       {mode === "overlay" && (
-        <div className="fixed inset-0 z-40" onClick={onClose} />
-      )}
+      <div className="fixed inset-0 z-40" onClick={onClose} />
+    )}
 
-      <div
-        className={`z-50 rounded-xl border border-zinc-700/50 bg-zinc-900 shadow-lg overflow-hidden animate-fadeIn`}
-        style={{ width: "100%" }}
+<div
+        className={`z-50 w-full sm:w-[32rem] rounded-xl border border-zinc-700/50 
+                    bg-zinc-900 shadow-lg overflow-hidden animate-fadeIn mx-auto ${className}`}
       >
-        {suggestionList}
-      </div>
+      {suggestionList}
+    </div>
 
       <style jsx>{`
         @keyframes fadeIn {

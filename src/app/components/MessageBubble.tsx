@@ -34,7 +34,7 @@ export default function MessageBubble({ msg }: { msg: Message }) {
   
   const getResponseIcon = () => {
     if (isUser) return null;
-    return <Terminal className="w-7 h-7 text-gray-300" />;
+    return <Terminal className="w-5 h-5 sm:w-6 md:w-7 sm:h-6 md:h-7 text-gray-300" />;
   };
 
   const highlightText = (text: string) => {
@@ -107,21 +107,20 @@ export default function MessageBubble({ msg }: { msg: Message }) {
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       {isUser ? (
-        <div className="font-Molde text-[24px] leading-relaxed text-gray-300">
+        <div className="font-Molde text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-gray-300">
           <div className="whitespace-pre-line">{textContent}</div>
         </div>
       ) : (
-        <div className="max-w-5xl p-6 rounded-lg font-Molde bg-transparent">
+        <div className="max-w-5xl p-3 sm:p-4 md:p-6 rounded-lg font-Molde bg-transparent">
           {/* Assistant header */}
           {!isTextResponse && (
-            <div className="flex items-center gap-3 mb-4 text-gray-200">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 text-gray-200">
               {getResponseIcon()}
-              <span className="text-[22px]">
+              <span className="text-lg sm:text-xl md:text-[22px]">
                 {msg.payload?.kind === 'projects' && 'Projects'}
                 {msg.payload?.kind === 'experience' && 'Experience'}
                 {msg.payload?.kind === 'skills' && 'Skills'}
                 {msg.payload?.kind === 'contact' && 'Contact'}
-                {msg.payload?.kind === 'about' && 'About'}
                 {(!msg.payload || msg.payload.kind === 'text') && 'Response'}
               </span>
             </div>
@@ -129,58 +128,46 @@ export default function MessageBubble({ msg }: { msg: Message }) {
 
           {/* Text responses with highlighting */}
           {isTextResponse && (
-  <div className="flex items-start gap-3">
-    <Terminal className="w-6 h-6 mt-1 text-gray-400 flex-shrink-0" />
-    {(msg as any).animate ? (
-  <p className="whitespace-pre-line text-[24px] leading-relaxed text-gray-400">
-    {textContent.split(" ").map((word, i) => {
-      const highlighted = highlightText(word).__html; // highlight this word
-      return (
-        <span
-          key={i}
-          className="inline-block mr-1"
-          style={{
-            animation: `fadeUp 600ms cubic-bezier(.2,.8,.2,1) ${i * 120}ms both`,
-          }}
-          dangerouslySetInnerHTML={{ __html: highlighted }}
-        />
-      );
-    })}
-    <style jsx>{`
-      @keyframes fadeUp {
-        0% {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `}</style>
-  </p>
-) : (
-  <div
-    className="whitespace-pre-line text-[24px] leading-relaxed text-gray-400"
-    dangerouslySetInnerHTML={highlightText(textContent)} // highlight whole text at once
-  />
-)}
-
-  </div>
-)}
+              <div className="flex items-start gap-2 sm:gap-3">
+                <Terminal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mt-1 text-gray-400 flex-shrink-0" />
+                <p className="whitespace-pre-line text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-gray-400">
+                  {textContent.split(" ").map((word, i) => {
+                    const highlighted = highlightText(word).__html;
+                    return (
+                      <span
+                        key={i}
+                        className="inline-block mr-1"
+                        style={{
+                          animation: `fadeUp 400ms cubic-bezier(.2,.8,.2,1) ${i * 60}ms both`,
+                        }}
+                        dangerouslySetInnerHTML={{ __html: highlighted }}
+                      />
+                    );
+                  })}
+                </p>
+                <style jsx>{`
+                  @keyframes fadeUp {
+                    0% {
+                      opacity: 0;
+                      transform: translateY(8px);
+                    }
+                    100% {
+                      opacity: 1;
+                      transform: translateY(0);
+                    }
+                  }
+                `}</style>
+              </div>
+            )}
 
 
-          {/* About Section */}
+          {/* About Section - simplified */}
           {msg.payload?.kind === 'about' && (
-            <div className="mt-3 text-gray-500 text-[24px] leading-relaxed">
-              <About
-                description={(msg.payload as any).description}
-              />
-            </div>
+            <About description={(msg.payload as any).description} />
           )}
 
           {msg.payload?.kind === 'project' && (
-            <div className="mt-3 grid gap-4">
+            <div className="mt-2 sm:mt-3 grid gap-3 sm:gap-4">
               {(msg.payload.items as Project[]).map((project, i) => (
                 <ProjectCard key={i} project={{ ...project, links: project.links ?? {} }} />
               ))}
@@ -188,12 +175,12 @@ export default function MessageBubble({ msg }: { msg: Message }) {
           )}
 
           {msg.payload?.kind === 'link' && (
-            <div className="mt-3">
+            <div className="mt-2 sm:mt-3">
               <a
                 href={msg.payload.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-200 underline text-[22px] hover:text-gray-500 transition-colors"
+                className="text-gray-200 underline text-lg sm:text-xl md:text-[22px] hover:text-gray-500 transition-colors"
               >
                 {msg.content || "Click here to view my resume"}
               </a>
@@ -201,22 +188,21 @@ export default function MessageBubble({ msg }: { msg: Message }) {
           )}
 
           {msg.payload?.kind === 'experience' && (
-            <div className="mt-3 text-gray-500">
+            <div className="mt-2 sm:mt-3 text-gray-500">
               <ExperienceTimeline items={msg.payload.items} />
             </div>
-            )}
+          )}
 
-{msg.payload?.kind === 'skills' && (
-  <div className="mt-3">
-    <div className="mt-4">
-      <Skills description={(msg.payload as any).description} />
-    </div>
-  </div>
-)}
+          {msg.payload?.kind === 'skills' && (
+            <div className="mt-2 sm:mt-3">
+              <div className="mt-3 sm:mt-4">
+                <Skills description={(msg.payload as any).description} />
+              </div>
+            </div>
+          )}
 
-
-            {msg.payload?.kind === 'contact' && (
-            <div className="mt-3 text-gray-500">
+          {msg.payload?.kind === 'contact' && (
+            <div className="mt-2 sm:mt-3 text-gray-500">
               <Contact contact={msg.payload.contact} />
             </div>
           )}

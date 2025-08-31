@@ -226,11 +226,6 @@ const ChatInterface = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-
-
-
-
-
       {/* Navbar */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
   
@@ -238,33 +233,35 @@ const ChatInterface = () => {
       <main className="flex-1 pt-20 sm:pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col">
         
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto mb-6 space-y-4 scrollbar-thin scrollbar-thumb-muted/40 scrollbar-track-transparent">
-          {messages.map((m) => (
-            <MessageBubble key={m.id} msg={m} />
-          ))}
-  
-          {/* Typing Indicator */}
-          {isTyping && (
-            <div className="flex justify-start">
-              <div>
-                <div className="flex items-center space-x-2">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">Thinking</div>
-                  <div className="flex space-x-1">
-                    <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" style={{animationDelay: "0.2s"}}></div>
-                    <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" style={{animationDelay: "0.4s"}}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-)}
-  
-          <div ref={messagesEndRef} />
-        </div>
-  
-        {/* Sticky Input Area */}
-        {/* Sticky Input Area */}
-<div className="sticky bottom-0 z-20 bg-transparent pt-3">
+       {/* Messages Container */}
+{/* Messages Container */}
+<div className="flex-1 overflow-y-auto mb-4 sm:mb-6 space-y-4 
+                scrollbar-thin scrollbar-thumb-muted/40 scrollbar-track-transparent 
+                scroll-smooth overscroll-contain px-1 sm:px-0">
+  {messages.map((m) => (
+    <div key={m.id} className="text-sm sm:text-base leading-relaxed">
+      <MessageBubble msg={m} />
+    </div>
+  ))}
+
+  {/* Typing Indicator */}
+  {isTyping && (
+    <div className="flex justify-start items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
+      Thinking
+      <div className="flex space-x-1 ml-2">
+        <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse"></div>
+        <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" style={{animationDelay: "0.2s"}}></div>
+        <div className="w-1.5 h-1.5 bg-gray-500 dark:bg-gray-400 rounded-full animate-pulse" style={{animationDelay: "0.4s"}}></div>
+      </div>
+    </div>
+  )}
+
+  <div ref={messagesEndRef} />
+</div>
+
+{/* Sticky Input Area */}
+<div className="sticky bottom-0 z-20 bg-black/95 dark:bg-zinc-900/95 
+                pt-2 sm:pt-3 px-2 sm:px-0 pb-[env(safe-area-inset-bottom)]">
   <div className="max-w-3xl mx-auto">
     <Searchbar
       ref={searchBarRef}
@@ -273,6 +270,7 @@ const ChatInterface = () => {
       onSubmit={handleSubmit}
       openSuggestions={() => setShowSuggestions(true)}
       closeSuggestions={() => setShowSuggestions(false)}
+      className="text-sm sm:text-base rounded-xl"
     />
     <CommandPalette
       open={showSuggestions}
@@ -291,9 +289,12 @@ const ChatInterface = () => {
       onClose={() => setShowSuggestions(false)}
       searchBarRef={searchBarRef}
       mode="inline"
+      className="text-sm sm:text-base"
     />
   </div>
 </div>
+
+
 
       </main>
     </div>
