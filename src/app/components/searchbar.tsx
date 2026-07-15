@@ -67,13 +67,13 @@ const Searchbar = forwardRef<HTMLDivElement, Props>(
   placeholder="Ask me anything • Type '/' for commands"
   autoComplete="off"
   className={[
-    "block mx-auto w-full rounded-2xl outline-none transition",
-    "font-['JetBrains_Mono'] text-base sm:text-[18px]",
-    "px-4 py-3 sm:px-8 sm:py-5",
+    "block mx-auto w-full rounded-full outline-none transition",
+    "font-['JetBrains_Mono'] text-sm sm:text-base",
+    "px-4 py-2.5 sm:px-6 sm:py-3",
     // Dark
-    "dark:bg-neutral-900 dark:text-gray-100 dark:border dark:border-neutral-700 dark:hover:bg-neutral-800 dark:focus:border-blue-500",
+    "dark:bg-neutral-900 dark:text-gray-100 dark:border dark:border-neutral-700 dark:hover:bg-neutral-800 dark:focus:border-orange-500 dark:focus:ring-1 dark:focus:ring-orange-500/30",
     // Light
-    "bg-gray-50 text-gray-900 border border-gray-200 hover:bg-gray-100 focus:border-blue-500",
+    "bg-gray-50 text-gray-900 border border-gray-200 hover:bg-gray-100 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/30",
     "placeholder:font-sans placeholder:italic placeholder:text-gray-400 placeholder:text-sm sm:placeholder:text-[16px]"
   ].join(" ")}
 />

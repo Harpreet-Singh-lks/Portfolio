@@ -38,7 +38,7 @@ const Dashboard = () => {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-neutral-900 to-neutral-800">
+    <div className="min-h-screen bg-black">
       
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -46,29 +46,29 @@ const Dashboard = () => {
         {/* Hero Section with animations */}
         <div className="flex flex-col items-center justify-center min-h-[70vh] sm:min-h-[75vh] md:min-h-[80vh]">
           {/* Main heading with fade-up animation */}
-          <h1 className={`font-Molde text-center font-bold leading-tight text-4xl sm:text-5xl md:text-6xl xl:text-7xl tracking-tight transition-all duration-1000 ease-out ${
-            isLoaded 
-              ? 'opacity-100 translate-y-0' 
+          <h1 className={`font-Molde text-center font-bold leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl tracking-tight transition-all duration-1000 ease-out ${
+            isLoaded
+              ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-8'
           }`}>
-            Hi, I am <span className="text-blue-500">Harpreet 👋</span>
+            Hi, I am <span className="text-orange-400">Harpreet 👋</span>
           </h1>
 
           {/* Subtitle with delayed animation */}
-          <h2 className={`mt-6 sm:mt-8 text-center font-Molde text-muted-foreground leading-snug text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-[2.75rem] tracking-tight [text-wrap:balance] transition-all duration-1000 ease-out delay-300 ${
-            isLoaded 
-              ? 'opacity-100 translate-y-0' 
+          <h2 className={`mt-4 sm:mt-6 text-center font-Molde text-muted-foreground leading-snug text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl tracking-tight [text-wrap:balance] transition-all duration-1000 ease-out delay-300 ${
+            isLoaded
+              ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-8'
           }`}>
-            <span className="block text-base sm:text-lg md:text-xl lg:text-3xl xl:text-4xl">
+            <span className="block text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
               & I love building scalable
             </span>
             <span className="block">
-              <span className="relative mx-auto flex items-center justify-center h-10 sm:h-12 md:h-14 px-2 sm:px-3 w-fit min-w-[160px] sm:min-w-[200px] transition-[width] duration-300">
-                <span className="absolute inset-0 flex items-center justify-center animate-rotateWord1 whitespace-nowrap text-indigo-400 text-xl sm:text-2xl md:text-4xl">
+              <span className="relative mx-auto flex items-center justify-center h-8 sm:h-10 md:h-11 px-2 sm:px-3 w-fit min-w-[140px] sm:min-w-[180px] transition-[width] duration-300">
+                <span className="absolute inset-0 flex items-center justify-center animate-rotateWord1 whitespace-nowrap text-amber-400 text-base sm:text-lg md:text-2xl">
                   backend systems
                 </span>
-                <span className="absolute inset-0 flex items-center justify-center animate-rotateWord2 whitespace-nowrap text-emerald-400 text-xl sm:text-2xl md:text-4xl">
+                <span className="absolute inset-0 flex items-center justify-center animate-rotateWord2 whitespace-nowrap text-yellow-400 text-base sm:text-lg md:text-2xl">
                   web3 products
                 </span>
               </span>

@@ -230,14 +230,12 @@ const ChatInterface = () => {
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
   
       {/* Main Chat Section */}
-      <main className="flex-1 pt-20 sm:pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex flex-col">
-        
-        {/* Messages Container */}
-       {/* Messages Container */}
-{/* Messages Container */}
-<div className="flex-1 overflow-y-auto mb-4 sm:mb-6 space-y-4 
-                scrollbar-thin scrollbar-thumb-muted/40 scrollbar-track-transparent 
-                scroll-smooth overscroll-contain px-1 sm:px-0">
+      <main className="flex-1 pt-20 sm:pt-24 px-4 sm:px-6 lg:px-8 mx-auto w-full flex flex-col overflow-hidden">
+        <div className="flex-1 max-w-3xl w-full mx-auto flex flex-col">
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto mb-4 sm:mb-6 space-y-4
+                          scrollbar-thin scrollbar-thumb-orange-500/40 scrollbar-track-transparent
+                          scroll-smooth px-1 sm:px-0">
   {messages.map((m) => (
     <div key={m.id} className="text-sm sm:text-base leading-relaxed">
       <MessageBubble msg={m} />
@@ -256,46 +254,42 @@ const ChatInterface = () => {
     </div>
   )}
 
-  <div ref={messagesEndRef} />
-</div>
+            <div ref={messagesEndRef} />
+          </div>
 
-{/* Sticky Input Area */}
-<div className="sticky bottom-0 z-20 bg-black/95 dark:bg-zinc-900/95 
-                pt-2 sm:pt-3 px-2 sm:px-0 pb-[env(safe-area-inset-bottom)]">
-  <div className="max-w-3xl mx-auto">
-    <Searchbar
-      ref={searchBarRef}
-      value={searchValue}
-      setValue={setSearchValue}
-      onSubmit={handleSubmit}
-      openSuggestions={() => setShowSuggestions(true)}
-      closeSuggestions={() => setShowSuggestions(false)}
-      className="text-sm sm:text-base rounded-xl"
-    />
-    <CommandPalette
-      open={showSuggestions}
-      query={searchValue}
-      items={SAMPLE_SUGGESTIONS.map((s) => ({
-        id: s.id,
-        title: s.command,
-        description: s.description,
-        intent: s.id,
-      }))}
-      onSelect={(item) => {
-        setShowSuggestions(false);
-        setSearchValue("");
-        handleSubmit(item.title);
-      }}
-      onClose={() => setShowSuggestions(false)}
-      searchBarRef={searchBarRef}
-      mode="inline"
-      className="text-sm sm:text-base"
-    />
-  </div>
-</div>
-
-
-
+          {/* Sticky Input Area */}
+          <div className="sticky bottom-0 z-20 bg-black
+                          pt-2 sm:pt-3 pb-[env(safe-area-inset-bottom)]">
+            <Searchbar
+              ref={searchBarRef}
+              value={searchValue}
+              setValue={setSearchValue}
+              onSubmit={handleSubmit}
+              openSuggestions={() => setShowSuggestions(true)}
+              closeSuggestions={() => setShowSuggestions(false)}
+              className="text-sm sm:text-base rounded-full"
+            />
+            <CommandPalette
+              open={showSuggestions}
+              query={searchValue}
+              items={SAMPLE_SUGGESTIONS.map((s) => ({
+                id: s.id,
+                title: s.command,
+                description: s.description,
+                intent: s.id,
+              }))}
+              onSelect={(item) => {
+                setShowSuggestions(false);
+                setSearchValue("");
+                handleSubmit(item.title);
+              }}
+              onClose={() => setShowSuggestions(false)}
+              searchBarRef={searchBarRef}
+              mode="inline"
+              className="text-sm sm:text-base"
+            />
+          </div>
+        </div>
       </main>
     </div>
   );
