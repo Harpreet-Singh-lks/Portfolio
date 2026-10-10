@@ -2,7 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { profile, sections } from '@/app/lib/content';
+import { AnimatePresence, motion } from 'framer-motion';
+import { featuredProjects, profile, projects, sections } from '@/app/lib/content';
+
+const projectCount = featuredProjects.length + projects.length;
 
 export default function LeftRail() {
   const [active, setActive] = useState(sections[0].id);
@@ -24,6 +27,10 @@ export default function LeftRail() {
     return () => observer.disconnect();
   }, []);
 
+  const current = sections.find((s) => s.id === active) ?? sections[0];
+  const caption = current.id === 'hero' ? profile.fullName.toUpperCase() : current.caption;
+  const subtitle = current.id === 'projects' ? `${projectCount} projects` : current.subtitle;
+
   const jump = (id: string) => (e: React.MouseEvent) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -35,23 +42,7 @@ export default function LeftRail() {
     <>
       {/* Desktop rail */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-1/3 border-r-2 border-ember bg-gradient-to-r from-ink to-[#1a0f0b] md:block">
-        <div className="flex h-full flex-col justify-center px-10 lg:px-16">
-          <Link href="/" className="font-display text-4xl text-ember lg:text-5xl">
-            Portfolio
-          </Link>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-neutral-500">
-            {profile.fullName}
-          </p>
-          <nav aria-label="Other pages" className="mt-10 flex flex-col gap-2 text-xs uppercase tracking-widest">
-            <Link href="/chat" className="text-neutral-400 transition-colors hover:text-ember">
-              Ask me →
-            </Link>
-            <Link href="/blog" className="text-neutral-400 transition-colors hover:text-ember">
-              Blog →
-            </Link>
-          </nav>
-        </div>
-        <nav aria-label="Sections" className="absolute right-3 top-1/2 flex -translate-y-1/2 flex-col gap-3">
+        <nav aria-label="Sections" className="absolute left-6 top-1/2 flex -translate-y-1/2 flex-col gap-3.5">
           {sections.map((s) => (
             <a
               key={s.id}
@@ -59,11 +50,39 @@ export default function LeftRail() {
               onClick={jump(s.id)}
               aria-label={s.label}
               aria-current={active === s.id ? 'true' : undefined}
-              className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                active === s.id ? 'bg-ember' : 'bg-neutral-600 hover:bg-neutral-400'
+              className={`block rounded-full transition-all ${
+                active === s.id
+                  ? 'h-3 w-3 bg-ember ring-4 ring-ember/25'
+                  : 'h-2 w-2 bg-neutral-600 hover:bg-neutral-400'
               }`}
             />
           ))}
+        </nav>
+
+        <div className="flex h-full flex-col justify-center px-16 lg:px-24">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="font-display text-5xl text-ember lg:text-6xl">{current.title}</h2>
+              {caption && (
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-400">{caption}</p>
+              )}
+              {subtitle && <p className="mt-2 font-display text-base italic text-neutral-500">{subtitle}</p>}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <nav
+          aria-label="Other pages"
+          className="absolute bottom-10 left-16 flex gap-6 text-xs uppercase tracking-widest lg:left-24"
+        >
+          <Link href="/chat" className="text-neutral-500 transition-colors hover:text-ember">Ask me →</Link>
+          <Link href="/blog" className="text-neutral-500 transition-colors hover:text-ember">Blog →</Link>
         </nav>
       </aside>
 

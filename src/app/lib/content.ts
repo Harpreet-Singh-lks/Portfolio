@@ -1,4 +1,10 @@
-export type SectionLink = { id: string; label: string };
+export type SectionLink = {
+  id: string;
+  label: string;
+  title: string; // big serif heading shown in the left rail
+  caption: string; // small uppercase line under the title
+  subtitle: string; // italic line under the caption
+};
 
 export type Profile = {
   name: string;
@@ -33,11 +39,11 @@ export type SkillGroup = { label: string; items: string[] };
 export type Social = { label: string; href?: string; icon: 'github' | 'linkedin' | 'twitter' | 'mail' };
 
 export const sections: SectionLink[] = [
-  { id: 'hero', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'connect', label: 'Connect' },
+  { id: 'hero', label: 'Home', title: 'Portfolio', caption: '', subtitle: '' }, // caption/subtitle filled from profile.fullName in LeftRail
+  { id: 'about', label: 'About', title: 'About', caption: 'BACKGROUND & STORY', subtitle: 'Developer, builder, problem solver' }, // TODO: reword
+  { id: 'projects', label: 'Projects', title: 'Work', caption: 'SELECTED PROJECTS', subtitle: '' }, // subtitle computed from project counts
+  { id: 'skills', label: 'Skills', title: 'Skills', caption: 'TOOLS & STACK', subtitle: 'What I build with' }, // TODO: reword
+  { id: 'connect', label: 'Connect', title: "Let's Connect", caption: 'GET IN TOUCH', subtitle: 'Open to new work and collaborations' }, // TODO: reword
 ];
 
 export const profile: Profile = {
