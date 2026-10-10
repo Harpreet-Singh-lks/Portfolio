@@ -45,9 +45,9 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
     >
       {/* Brand Logo */}
       <div className="flex items-center">
-        <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-orange-600
+        <div className="h-8 w-8 bg-ember
                         text-white rounded-lg grid place-items-center
-                        font-bold text-sm shadow-lg shadow-orange-500/20
+                        font-bold text-sm shadow-lg shadow-ember/20
                         transition-transform duration-200 hover:scale-105">
           H
         </div>
@@ -66,13 +66,13 @@ const Navbar = ({ activeTab, setActiveTab }: NavbarProps) => {
               className={`font-medium text-xs sm:text-sm tracking-wide transition-all duration-300
                          relative group py-1 px-1
                          ${isActive
-                           ? 'text-orange-400'
+                           ? 'text-ember'
                            : 'text-neutral-400 hover:text-white'
                          }`}
             >
               /{tab.label}
               {/* Active indicator */}
-              <span className={`absolute -bottom-1 left-0 h-0.5 bg-orange-500
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-ember
                                transition-all duration-300 rounded-full
                                ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
             </Link>
