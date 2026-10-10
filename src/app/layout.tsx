@@ -21,7 +21,7 @@ const mono = JetBrains_Mono({
 
 export const metadata = {
   title: 'Harpreet Singh — Portfolio',
-  description: 'Full-stack developer building backend systems, DeFi and web apps.',
+  description: 'Backend developer building AI agents, payments and onchain products.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -15,8 +15,8 @@ export default function FeaturedProject({ project }: { project: Data }) {
         </span>
       )}
       <h3 className="mt-3 break-words font-display text-5xl font-bold leading-none tracking-[-0.02em] text-white xl:text-7xl">{project.title}</h3>
-      <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] text-ember">{project.subtitle}</p>
-      <p className={`mt-4 max-w-xl text-[17px] leading-[1.7] text-neutral-400 ${accent ? 'ml-auto' : ''}`}>
+      <p className={`mt-2 text-sm font-semibold uppercase tracking-[0.08em] ${accent ? 'text-white' : 'text-ember'}`}>{project.subtitle}</p>
+      <p className={`mt-4 max-w-xl text-[17px] leading-[1.7] ${accent ? 'ml-auto text-white/85' : 'text-neutral-400'}`}>
         {project.description}
       </p>
       {project.tags.length > 0 && (
