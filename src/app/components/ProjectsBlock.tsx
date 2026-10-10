@@ -5,7 +5,7 @@ import ProjectGrid from './ProjectGrid';
 
 export default function ProjectsBlock() {
   return (
-    <section id="projects" className="px-6 py-24 md:px-12 lg:px-16">
+    <section id="projects" className="flex min-h-screen flex-col justify-center px-6 py-16 md:px-8">
       <div className="space-y-6">
         {featuredProjects.map((p, i) => (
           <ScrollFadeIn key={p.title} delay={i * 0.1}>

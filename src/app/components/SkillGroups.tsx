@@ -3,7 +3,7 @@ import { ScrollFadeIn } from './ScrollFadeIn';
 
 export default function SkillGroups() {
   return (
-    <section id="skills" className="px-6 py-24 md:px-12 lg:px-16">
+    <section id="skills" className="flex min-h-screen flex-col justify-center px-6 py-16 md:px-12 lg:px-16">
       <ScrollFadeIn>
         <h2 className="font-display text-3xl text-white">Skills</h2>
         <div className="mt-8 space-y-6">

@@ -3,9 +3,9 @@ import { ScrollFadeIn } from './ScrollFadeIn';
 
 export default function AboutCard() {
   return (
-    <section id="about" className="px-6 py-24 md:px-12 lg:px-16">
-      <ScrollFadeIn>
-        <div className="flex min-h-[420px] flex-col justify-center rounded-md bg-rust p-8 md:p-12">
+    <section id="about" className="flex min-h-screen items-center px-6 py-8 md:px-8">
+      <ScrollFadeIn className="w-full">
+        <div className="flex min-h-[calc(100vh-4rem)] w-full flex-col justify-center rounded-md bg-rust p-8 md:p-12">
           <div className="max-w-md space-y-4 text-sm leading-relaxed text-white/90">
             {about.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
