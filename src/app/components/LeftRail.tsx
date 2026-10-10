@@ -81,7 +81,6 @@ export default function LeftRail() {
           aria-label="Other pages"
           className="absolute bottom-10 left-16 flex gap-6 text-sm uppercase tracking-widest lg:left-24"
         >
-          <Link href="/chat" className="text-neutral-500 transition-colors hover:text-ember">Ask me →</Link>
           <Link href="/blog" className="text-neutral-500 transition-colors hover:text-ember">Blog →</Link>
         </nav>
       </aside>
@@ -92,7 +91,6 @@ export default function LeftRail() {
           Portfolio
         </Link>
         <nav aria-label="Other pages" className="flex gap-4 text-sm uppercase tracking-widest text-neutral-400">
-          <Link href="/chat">Ask me</Link>
           <Link href="/blog">Blog</Link>
         </nav>
       </header>
