@@ -1,8 +1,21 @@
-import Image from "next/image";
-import Dashboard from "./Dashboard/page";
+import LeftRail from './components/LeftRail';
+import Hero from './components/Hero';
+import AboutCard from './components/AboutCard';
+import ProjectsBlock from './components/ProjectsBlock';
+import SkillGroups from './components/SkillGroups';
+import Connect from './components/Connect';
 
 export default function Home() {
   return (
-    <Dashboard/>
+    <div className="min-h-screen bg-ink bg-grid">
+      <LeftRail />
+      <main className="md:ml-[33.3333%]">
+        <Hero />
+        <AboutCard />
+        <ProjectsBlock />
+        <SkillGroups />
+        <Connect />
+      </main>
+    </div>
   );
 }
