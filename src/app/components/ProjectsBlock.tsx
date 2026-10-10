@@ -15,7 +15,7 @@ export default function ProjectsBlock() {
       </div>
       {projects.length > 0 && (
         <ScrollFadeIn className="mt-12">
-          <p className="mb-4 text-[9px] uppercase tracking-[0.25em] text-neutral-600">More Projects</p>
+          <p className="mb-4 text-xs uppercase tracking-[0.25em] text-neutral-500">More Projects</p>
           <ProjectGrid items={projects} />
         </ScrollFadeIn>
       )}

@@ -7,13 +7,13 @@ export default function ProjectGrid({ items }: { items: GridProject[] }) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {items.map((p) => (
         <article key={p.title} className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-          <h4 className="break-words font-display text-xl text-white">{p.title}</h4>
-          <p className="mt-1 text-[9px] font-semibold uppercase tracking-widest text-ember">{p.subtitle}</p>
-          <p className="mt-2 text-xs leading-relaxed text-neutral-500">{p.description}</p>
+          <h4 className="break-words font-display text-2xl text-white">{p.title}</h4>
+          <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-ember">{p.subtitle}</p>
+          <p className="mt-2 text-sm leading-relaxed text-neutral-400">{p.description}</p>
           {p.tags.length > 0 && (
             <ul className="mt-3 flex flex-wrap gap-1.5">
               {p.tags.map((t) => (
-                <li key={t} className="border border-white/15 px-1.5 py-0.5 text-[9px] text-neutral-300">{t}</li>
+                <li key={t} className="border border-white/15 px-2 py-0.5 text-xs text-neutral-300">{t}</li>
               ))}
             </ul>
           )}
@@ -25,7 +25,7 @@ export default function ProjectGrid({ items }: { items: GridProject[] }) {
                   href={l.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-widest text-ember hover:text-white"
+                  className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-widest text-ember hover:text-white"
                 >
                   <ExternalLink className="h-3 w-3" /> {l.label}
                 </a>

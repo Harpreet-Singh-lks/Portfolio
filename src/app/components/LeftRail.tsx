@@ -70,16 +70,16 @@ export default function LeftRail() {
             >
               <h2 className="font-display text-5xl text-ember lg:text-6xl">{current.title}</h2>
               {caption && (
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.25em] text-neutral-400">{caption}</p>
+                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-400">{caption}</p>
               )}
-              {subtitle && <p className="mt-2 font-display text-base italic text-neutral-500">{subtitle}</p>}
+              {subtitle && <p className="mt-2 font-display text-lg italic text-neutral-500">{subtitle}</p>}
             </motion.div>
           </AnimatePresence>
         </div>
 
         <nav
           aria-label="Other pages"
-          className="absolute bottom-10 left-16 flex gap-6 text-xs uppercase tracking-widest lg:left-24"
+          className="absolute bottom-10 left-16 flex gap-6 text-sm uppercase tracking-widest lg:left-24"
         >
           <Link href="/chat" className="text-neutral-500 transition-colors hover:text-ember">Ask me →</Link>
           <Link href="/blog" className="text-neutral-500 transition-colors hover:text-ember">Blog →</Link>
@@ -91,7 +91,7 @@ export default function LeftRail() {
         <Link href="/" className="font-display text-2xl text-ember">
           Portfolio
         </Link>
-        <nav aria-label="Other pages" className="flex gap-4 text-xs uppercase tracking-widest text-neutral-400">
+        <nav aria-label="Other pages" className="flex gap-4 text-sm uppercase tracking-widest text-neutral-400">
           <Link href="/chat">Ask me</Link>
           <Link href="/blog">Blog</Link>
         </nav>
