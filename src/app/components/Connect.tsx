@@ -8,8 +8,8 @@ export default function Connect() {
   return (
     <section id="connect" className="flex min-h-screen flex-col justify-center px-6 pb-16 pt-24 md:px-12 lg:px-16">
       <ScrollFadeIn>
-        <h2 className="font-display text-4xl text-white">Let&apos;s Connect</h2>
-        <a href={`mailto:${profile.email}`} className="mt-4 block break-all text-xl text-white hover:text-ember">
+        <h2 className="font-display text-[40px] tracking-[-0.02em] text-white">Let&apos;s Connect</h2>
+        <a href={`mailto:${profile.email}`} className="mt-4 block break-all text-2xl tracking-[-0.02em] text-white md:text-[32px] hover:text-ember">
           {profile.email}
         </a>
         <div className="mt-5 flex gap-3">
@@ -31,7 +31,7 @@ export default function Connect() {
               );
             })}
         </div>
-        <p className="mt-10 text-xs text-neutral-500">
+        <p className="mt-10 text-[13px] tracking-[0.08em] text-neutral-500">
           © {new Date().getFullYear()} {profile.fullName}. All rights reserved.
         </p>
       </ScrollFadeIn>

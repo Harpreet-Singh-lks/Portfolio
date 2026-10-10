@@ -10,19 +10,19 @@ export default function FeaturedProject({ project }: { project: Data }) {
       }`}
     >
       {project.badge && (
-        <span className="inline-block border border-amber-400/40 px-2 py-1 font-mono text-xs uppercase tracking-widest text-amber-300">
+        <span className="inline-block border border-amber-400/40 px-2 py-1 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-amber-300">
           {project.badge}
         </span>
       )}
-      <h3 className="mt-3 break-words font-display text-4xl text-white md:text-5xl">{project.title}</h3>
-      <p className="mt-1 text-sm font-semibold uppercase tracking-widest text-ember">{project.subtitle}</p>
-      <p className={`mt-4 max-w-xl text-base leading-relaxed text-neutral-400 ${accent ? 'ml-auto' : ''}`}>
+      <h3 className="mt-3 break-words font-display text-5xl font-bold leading-none tracking-[-0.02em] text-white xl:text-7xl">{project.title}</h3>
+      <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] text-ember">{project.subtitle}</p>
+      <p className={`mt-4 max-w-xl text-[17px] leading-[1.7] text-neutral-400 ${accent ? 'ml-auto' : ''}`}>
         {project.description}
       </p>
       {project.tags.length > 0 && (
         <ul className={`mt-4 flex flex-wrap gap-2 ${accent ? 'justify-end' : ''}`}>
           {project.tags.map((t) => (
-            <li key={t} className="border border-white/15 px-2.5 py-1 text-sm text-neutral-300">{t}</li>
+            <li key={t} className="border border-white/15 px-2.5 py-1 text-[13px] font-medium tracking-[0.02em] text-neutral-300">{t}</li>
           ))}
         </ul>
       )}

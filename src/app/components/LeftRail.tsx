@@ -68,11 +68,11 @@ export default function LeftRail() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="font-display text-5xl text-ember lg:text-6xl">{current.title}</h2>
+              <h2 className="font-display text-5xl font-light !leading-[0.95] tracking-[-0.03em] text-ember lg:text-7xl xl:text-[80px]">{current.title}</h2>
               {caption && (
-                <p className="mt-4 text-sm font-semibold uppercase tracking-[0.25em] text-neutral-400">{caption}</p>
+                <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.14em] text-neutral-400">{caption}</p>
               )}
-              {subtitle && <p className="mt-2 font-display text-lg italic text-neutral-500">{subtitle}</p>}
+              {subtitle && <p className="mt-2 font-display text-base italic text-neutral-500">{subtitle}</p>}
             </motion.div>
           </AnimatePresence>
         </div>
