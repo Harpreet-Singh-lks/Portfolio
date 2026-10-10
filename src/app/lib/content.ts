@@ -127,6 +127,6 @@ export const skillGroups: SkillGroup[] = [
 export const socials: Social[] = [
   { label: 'GitHub', href: 'https://github.com/Harpreet-Singh-lks', icon: 'github' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/harpreet-singh-792362256', icon: 'linkedin' },
-  { label: 'Twitter', href: undefined, icon: 'twitter' }, // not on resume; hidden until a URL is added
+  { label: 'X', href: 'https://x.com/J_oKer_57', icon: 'twitter' },
   { label: 'Email', href: `mailto:${profile.email}`, icon: 'mail' },
 ];
