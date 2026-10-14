@@ -35,12 +35,21 @@ export type GridProject = {
   links: Link[];
 };
 
+export type ExperienceItem = {
+  role: string;
+  company: string;
+  period: string;
+  bullets: string[];
+  tags: string[];
+};
+
 export type SkillGroup = { label: string; items: string[] };
 export type Social = { label: string; href?: string; icon: 'github' | 'linkedin' | 'twitter' | 'mail' };
 
 export const sections: SectionLink[] = [
   { id: 'hero', label: 'Home', title: 'Portfolio', caption: '', subtitle: '' }, // caption/subtitle filled from profile.fullName in LeftRail
   { id: 'about', label: 'About', title: 'About', caption: 'BACKGROUND & STORY', subtitle: 'Backend, AI agents & Web3' },
+  { id: 'experience', label: 'Experience', title: 'Experience', caption: 'WHERE I HAVE WORKED', subtitle: 'Backend & full-stack roles' },
   { id: 'projects', label: 'Projects', title: 'Work', caption: 'SELECTED PROJECTS', subtitle: '' }, // subtitle computed from project counts
   { id: 'skills', label: 'Skills', title: 'Skills', caption: 'TOOLS & STACK', subtitle: 'What I build with' },
   { id: 'connect', label: 'Connect', title: "Let's Connect", caption: 'GET IN TOUCH', subtitle: 'Open to new work and collaborations' },
@@ -50,7 +59,7 @@ export const profile: Profile = {
   name: 'Harpreet',
   fullName: 'Harpreet Singh',
   role: 'Backend Developer',
-  tagline: 'AI Agents · Web3 · Payments',
+  tagline: 'Distributed Systems · AI Agents · Web3 ',
   bio: 'IIT Roorkee engineer building AI agents, backend systems and onchain products. Currently co-building the backend of Elara, an AI fashion assistant with 3,000+ customers.',
   email: 'Harpreetwork57@gmail.com', // from resume; the old site used preetsinghlks@gmail.com
 };
@@ -63,6 +72,32 @@ export const about = {
   ],
   quote: '', // TODO: optional pull quote in your own words (hidden when empty)
 };
+
+export const experience: ExperienceItem[] = [
+  {
+    role: 'Backend Developer',
+    company: 'Elara',
+    period: 'Sep 2025 – Present',
+    bullets: [
+      'Co-built the backend of joinelara.com, an AI fashion assistant with 3,000+ customers: a NestJS/TypeScript API on MongoDB and Redis, deployed on GCP with custom domains.',
+      'Designed the AI agent pipeline (intent decision-making, cross-site product search) and cut response latency from 2 min to 30s while improving answer quality.',
+      'Built virtual try-on, price tracking, a custom web scraper and Chrome extensions.',
+      'Implemented subscriptions with Dodo Payments, including webhooks and plan-based credit grants.',
+    ],
+    tags: ['NestJS', 'TypeScript', 'MongoDB', 'Redis', 'Dodo Payments', 'Gemini', 'OpenAI', 'GCP'],
+  },
+  {
+    role: 'Software Developer (Intern)',
+    company: 'Amorcer',
+    period: 'Jun 2025 – Jul 2025',
+    bullets: [
+      'Built the MVP of a doctor dashboard and REST APIs in Next.js/Node.js, with PostgreSQL schemas managed through Prisma, for an early-stage healthtech startup.',
+      'Integrated Stripe for doctor onboarding and subscription payments, with an admin view of account status.',
+      'Deployed on Vercel with custom domains; worked directly with the founder on product scope as the startup pivoted to healthcare.',
+    ],
+    tags: ['Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'Stripe', 'Vercel'],
+  },
+];
 
 export const featuredProjects: FeaturedProject[] = [
   {
