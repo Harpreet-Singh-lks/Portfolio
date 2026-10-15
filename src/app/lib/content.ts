@@ -60,16 +60,17 @@ export const profile: Profile = {
   fullName: 'Harpreet Singh',
   role: 'Backend Developer',
   tagline: 'Distributed Systems · AI Agents · Web3 ',
-  bio: 'IIT Roorkee engineer building AI agents, backend systems and onchain products. Currently co-building the backend of Elara, an AI fashion assistant with 3,000+ customers.',
+  bio: 'Building Reliable Backend Systems And AI-powered Product from Architecture to production.',
   email: 'Harpreetwork57@gmail.com', // from resume; the old site used preetsinghlks@gmail.com
 };
 
 export const about = {
   paragraphs: [
-    'I graduated in Electrical Engineering from IIT Roorkee in 2026, and I build backend systems, LLM agents and onchain products.',
-    'At Elara I co-built the backend of an AI fashion assistant with 3,000+ customers, and cut agent response latency from 2 minutes to 30 seconds. Before that I built a doctor dashboard with Stripe payments for a healthtech startup, Amorcer.',
-    'I build agent infrastructure and Web3 projects at hackathons, most recently Beast at ETHOnline 2026. Off the keyboard, I play volleyball: Gold at Udghosh 2023 and Silver at Inter-IIT 2023 and 2024.',
+    'I studied Electrical Engineering at IIT Roorkee. In my second year I joined a hackathon, and that pulled me into software. I spent the next stretch experimenting and failing a lot, and got into Web3 along the way, at first because of the hackathon prizes. I have kept building and improving ever since.',
+    'In my final year I joined an early-stage startup that pivoted from business automation to healthcare within a month. In two months we built an MVP, which another healthcare company later acquired. After that I joined Elara, an AI agent that recommends outfits by occasion, fit, mood and time. I co-built its backend for 3,000+ customers and cut agent response time from 2 minutes to 30 seconds.',
+    'Outside of code I play volleyball: Gold at Udghosh 2023, Silver at Inter-IIT 2023 and 2024. Travelling with the team taught me teamwork and patience, how to take a loss, and how to stay calm when things get tense. I bring the same habits to work.',
   ],
+
   quote: '', // TODO: optional pull quote in your own words (hidden when empty)
 };
 
