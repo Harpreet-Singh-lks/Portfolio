@@ -66,10 +66,11 @@ export const profile: Profile = {
 
 export const about = {
   paragraphs: [
-    'I studied Electrical Engineering at IIT Roorkee. In my second year I joined a hackathon, and that pulled me into software. I spent the next stretch experimenting and failing a lot, and got into Web3 along the way, at first because of the hackathon prizes. I have kept building and improving ever since.',
-    'In my final year I joined an early-stage startup that pivoted from business automation to healthcare within a month. In two months we built an MVP, which another healthcare company later acquired. After that I joined Elara, an AI agent that recommends outfits by occasion, fit, mood and time. I co-built its backend for 3,000+ customers and cut agent response time from 2 minutes to 30 seconds.',
-    'Outside of code I play volleyball: Gold at Udghosh 2023, Silver at Inter-IIT 2023 and 2024. Travelling with the team taught me teamwork and patience, how to take a loss, and how to stay calm when things get tense. I bring the same habits to work.',
+    'I build backend systems and AI agents, and I got here by way of a detour. I studied Electrical Engineering at IIT Roorkee, and a hackathon in my second year pulled me into software. Hackathons also led me to Web3. Since then I have learned the way I like best: by shipping, breaking things, and getting better each time.',
+    'In my final year I joined an early-stage startup as it pivoted from business automation to healthcare. We shipped an MVP in two months, and it was later acquired by a healthcare company. Today I co-build the backend of Elara, an AI stylist that recommends outfits by occasion, fit, mood and time for 3,000+ customers. I designed its agent pipeline and cut response time from 2 minutes to 30 seconds.',
+    'I also play volleyball, with Gold at Udghosh 2023 and Silver at Inter-IIT 2023 and 2024. Years of tournaments taught me teamwork and patience, how to take a loss, and how to stay calm under pressure. I bring the same to engineering.',
   ],
+
 
   quote: '', // TODO: optional pull quote in your own words (hidden when empty)
 };
