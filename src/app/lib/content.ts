@@ -60,7 +60,7 @@ export const profile: Profile = {
   fullName: 'Harpreet Singh',
   role: 'Backend Developer',
   tagline: 'Distributed Systems · AI Agents · Web3',
-  bio: 'I build reliable backend systems and AI-powered products, from architecture to production. Currently co-building the backend of Elara, an AI stylist used by 3,000+ customers.',
+  bio: 'I build reliable backend systems and AI-powered products, from architecture to production.',
   email: 'Harpreetwork57@gmail.com', // from resume; the old site used preetsinghlks@gmail.com
 };
 
