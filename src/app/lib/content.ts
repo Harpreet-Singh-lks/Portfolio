@@ -147,6 +147,22 @@ export const projects: GridProject[] = [
     tags: ['Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'Stripe'],
     links: [],
   },
+  {
+    title: 'LangDAO',
+    subtitle: 'WEB3 · ETHONLINE 2025 · TEAM PROJECT',
+    description:
+      'Platform where people use their language skills to teach, learn and earn crypto: wallet-based sessions, token-gated rooms and proof of participation. Contributed a roulette feature and caching/performance work.',
+    tags: ['Next.js', 'TypeScript', 'Solidity', 'wagmi', 'Huddle01'],
+    links: [{ label: 'GitHub', href: 'https://github.com/Harpreet-Singh-lks/langdao-ethonline2025' }],
+  },
+  {
+    title: 'Newton-Raphson Load Flow',
+    subtitle: 'POWER SYSTEMS · C++',
+    description:
+      'Load flow solver for power systems with distributed generation: droop-controlled DGs, PQ, ZIP and frequency-dependent loads, and Jacobian construction, reporting bus voltages, angles and losses.',
+    tags: ['C++', 'Numerical Methods', 'Power Systems'],
+    links: [{ label: 'GitHub', href: 'https://github.com/Harpreet-Singh-lks/Modified-Newton-Raphson-for-load-flow-analysis' }],
+  },
 ];
 
 export const skillGroups: SkillGroup[] = [
