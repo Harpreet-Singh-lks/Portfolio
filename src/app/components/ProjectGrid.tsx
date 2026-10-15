@@ -18,14 +18,14 @@ export default function ProjectGrid({ items }: { items: GridProject[] }) {
             </ul>
           )}
           {p.links.length > 0 && (
-            <div className="mt-3 flex gap-3">
+            <div className="mt-1 flex gap-4">
               {p.links.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-widest text-ember hover:text-white"
+                  className="inline-flex items-center gap-1 py-2 text-xs font-semibold uppercase tracking-widest text-ember hover:text-white"
                 >
                   <ExternalLink className="h-3 w-3" /> {l.label}
                 </a>

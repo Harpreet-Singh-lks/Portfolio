@@ -6,7 +6,7 @@ const icons = { github: Github, linkedin: Linkedin, twitter: Twitter, mail: Mail
 
 export default function Connect() {
   return (
-    <section id="connect" className="flex min-h-screen flex-col justify-center px-6 pb-16 pt-24 md:px-12 lg:px-16">
+    <section id="connect" className="flex flex-col md:min-h-screen justify-center px-6 pb-16 pt-8 md:px-12 md:pt-24 lg:px-16">
       <ScrollFadeIn>
         <h2 className="font-display text-[40px] tracking-[-0.02em] text-white">Let&apos;s Connect</h2>
         <a href={`mailto:${profile.email}`} className="mt-4 block break-all text-2xl tracking-[-0.02em] text-white md:text-[32px] hover:text-ember">

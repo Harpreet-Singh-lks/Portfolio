@@ -3,7 +3,7 @@ import { ScrollFadeIn } from './ScrollFadeIn';
 
 export default function Experience() {
   return (
-    <section id="experience" className="flex min-h-screen flex-col justify-center px-6 py-16 md:px-12 lg:px-16">
+    <section id="experience" className="flex flex-col md:min-h-screen justify-center px-6 py-16 md:px-12 lg:px-16">
       <ScrollFadeIn>
         <h2 className="font-display text-[40px] tracking-[-0.02em] text-white">Experience</h2>
         <ol className="mt-8 space-y-10 border-l border-white/15 pl-6">

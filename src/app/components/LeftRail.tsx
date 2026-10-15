@@ -91,7 +91,7 @@ export default function LeftRail() {
           Portfolio
         </Link>
         <nav aria-label="Other pages" className="flex gap-4 text-sm uppercase tracking-widest text-neutral-400">
-          <Link href="/blog">Blog</Link>
+          <Link href="/blog" className="py-2">Blog</Link>
         </nav>
       </header>
     </>

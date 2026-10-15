@@ -152,3 +152,7 @@ html {
 .prose-blog pre code { background: none; padding: 0; font-size: 14px; }
 .prose-blog hr { border: 0; border-top: 1px solid rgba(255, 255, 255, 0.12); }
 .prose-blog img { max-width: 100%; border-radius: 6px; }
+
+/* Keep anchored sections clear of the sticky mobile header */
+main section[id] { scroll-margin-top: 57px; }
+@media (min-width: 768px) { main section[id] { scroll-margin-top: 0; } }
