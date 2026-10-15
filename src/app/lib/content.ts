@@ -140,14 +140,6 @@ export const projects: GridProject[] = [
     links: [{ label: 'GitHub', href: 'https://github.com/Harpreet-Singh-lks/SelfMate' }],
   },
   {
-    title: 'Amorcer Dashboard',
-    subtitle: 'HEALTHTECH · INTERNSHIP',
-    description:
-      'MVP doctor dashboard and REST APIs for a healthtech startup, with Stripe onboarding and subscription payments.',
-    tags: ['Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'Stripe'],
-    links: [],
-  },
-  {
     title: 'LangDAO',
     subtitle: 'WEB3 · ETHONLINE 2025 · TEAM PROJECT',
     description:
