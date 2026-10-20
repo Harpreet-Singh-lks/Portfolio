@@ -156,3 +156,9 @@ html {
 /* Keep anchored sections clear of the sticky mobile header */
 main section[id] { scroll-margin-top: 57px; }
 @media (min-width: 768px) { main section[id] { scroll-margin-top: 0; } }
+
+/* ID card idle sway, pivoting from the lanyard clip */
+@keyframes card-swing {
+  0%, 100% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.2deg); }
+}

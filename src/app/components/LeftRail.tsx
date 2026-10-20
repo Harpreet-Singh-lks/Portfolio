@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { featuredProjects, profile, projects, sections } from '@/app/lib/content';
 
 const projectCount = featuredProjects.length + projects.length;
+// Blog link hidden until the placeholder posts are replaced with real writing.
+const showBlog = false;
 
 export default function LeftRail() {
   const [active, setActive] = useState(sections[0].id);
@@ -77,12 +79,14 @@ export default function LeftRail() {
           </AnimatePresence>
         </div>
 
-        <nav
-          aria-label="Other pages"
-          className="absolute bottom-10 left-16 flex gap-6 text-sm uppercase tracking-widest lg:left-24"
-        >
-          <Link href="/blog" className="text-neutral-500 transition-colors hover:text-ember">Blog →</Link>
-        </nav>
+        {showBlog && (
+          <nav
+            aria-label="Other pages"
+            className="absolute bottom-10 left-16 flex gap-6 text-sm uppercase tracking-widest lg:left-24"
+          >
+            <Link href="/blog" className="text-neutral-500 transition-colors hover:text-ember">Blog →</Link>
+          </nav>
+        )}
       </aside>
 
       {/* Mobile top bar */}
@@ -90,9 +94,11 @@ export default function LeftRail() {
         <Link href="/" className="font-display text-2xl text-ember">
           Portfolio
         </Link>
-        <nav aria-label="Other pages" className="flex gap-4 text-sm uppercase tracking-widest text-neutral-400">
-          <Link href="/blog" className="py-2">Blog</Link>
-        </nav>
+        {showBlog && (
+          <nav aria-label="Other pages" className="flex gap-4 text-sm uppercase tracking-widest text-neutral-400">
+            <Link href="/blog" className="py-2">Blog</Link>
+          </nav>
+        )}
       </header>
     </>
   );

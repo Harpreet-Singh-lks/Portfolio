@@ -12,6 +12,7 @@ export type Profile = {
   role: string;
   tagline: string;
   bio: string;
+  openTo: string;
   email: string;
 };
 
@@ -61,25 +62,36 @@ export const profile: Profile = {
   role: 'Backend Developer',
   tagline: 'Distributed Systems · AI Agents · Web3',
   bio: 'I build reliable backend systems and AI-powered products, from architecture to production.',
+  openTo: 'Open to backend & AI roles',
   email: 'Harpreetwork57@gmail.com', // from resume; the old site used preetsinghlks@gmail.com
 };
 
-export const about = {
+// A paragraph is a list of plain strings and highlighted spans (optionally links).
+export type StorySegment = string | { text: string; href?: string };
+
+export const about: { paragraphs: StorySegment[][] } = {
   paragraphs: [
-    'I build backend systems and AI agents, and I got here by way of a detour. I studied Electrical Engineering at IIT Roorkee, and a hackathon in my second year pulled me into software. Hackathons also led me to Web3. Since then I have learned the way I like best: by shipping, breaking things, and getting better each time.',
-    'In my final year I joined an early-stage startup as it pivoted from business automation to healthcare. We shipped an MVP in two months, and it was later acquired by a healthcare company. Today I co-build the backend of Elara, an AI stylist that recommends outfits by occasion, fit, mood and time.',
-    'I also play volleyball, with Gold at Udghosh 2023 and Silver at Inter-IIT 2023 and 2024. Years of tournaments taught me teamwork and patience, how to take a loss, and how to stay calm under pressure. I bring the same to engineering.',
+    [
+      'Currently working as a ',
+      { text: 'Backend Developer at Elara' },
+      ', building the backend of an AI stylist that recommends outfits by occasion, fit, mood and time. Since joining in November 2025, I have focused on the AI agent pipeline and on the product around it: virtual try-on, price tracking and subscription payments.',
+    ],
+    [
+      'Before that, I studied Electrical Engineering at IIT Roorkee, until a second-year hackathon pulled me into software. Hackathons also led me to Web3. In my final year I joined an early-stage startup as it pivoted from business automation to healthcare. We shipped an MVP in two months, and a healthcare company later acquired it.',
+    ],
+    [
+      'When I am not building or debugging systems, I am probably running or on a volleyball court. And yes, ',
+      { text: 'Saitama tops Goku' },
+      '. Also, sub is better than dub. Fight me.',
+    ],
   ],
-
-
-  quote: 'Learn by shipping. Stay calm when it breaks.',
 };
 
 export const experience: ExperienceItem[] = [
   {
     role: 'Backend Developer',
     company: 'Elara',
-    period: 'Sep 2025 – Present',
+    period: 'Nov 2025 – Present',
     bullets: [
       'Co-built the backend of joinelara.com, an AI fashion assistant with 3,000+ customers: a NestJS/TypeScript API on MongoDB and Redis, deployed on GCP with custom domains.',
       'Designed the AI agent pipeline (intent decision-making, cross-site product search) and cut response latency from 2 min to 30s while improving answer quality.',
